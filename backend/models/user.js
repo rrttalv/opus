@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     },
     login_count: {
         type: Number
+    },
+    signup: {
+        type: Date,
+        default: Date.now
     }
 });
 
