@@ -29,12 +29,13 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+export default User;
 
-module.exports.comparePassword = async (inputPassword, hash) => {
+export const comparePassword = async (inputPassword, hash) => {
     return null
 }
 
-module.exports.addUser = async (user) => {
+export const addUser = async (user) => {
     return null
 }
