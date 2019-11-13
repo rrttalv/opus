@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon -r esm server.js"
+    "server": "nodemon -r esm server.js",
+    "client": "npm start --prefix client"
   },
   "author": "rico rein talvar",
   "license": "ISC"
