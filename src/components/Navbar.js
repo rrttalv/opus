@@ -7,8 +7,21 @@ export default class Navbar extends Component {
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <Router>
                 <div className="container">
-                    <Link to='/' className="logo" style={{ textDecoration: 'none', color: '#454545' }}>Firma</Link>
-                    
+                    <div className="collapse navbar-collapse">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="navbar-item">
+                                <Link to='/' className="nav-link" style={{ textDecoration: 'none', color: '#454545' }}>Firma</Link>
+                            </li>
+                        </ul>
+                        <ul className="navbar-nav mr-sm-2">
+                            <li className="navbar-item">
+                                <Link to='/' className="nav-link" style={{ textDecoration: 'none', color: '#454545' }}>Login</Link>
+                            </li>
+                            <li className="navbar-item">
+                                <Link to='/' className="nav-link" style={{ textDecoration: 'none', color: '#454545' }}>Register</Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 </Router>
             </nav>
