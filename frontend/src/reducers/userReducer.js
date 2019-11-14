@@ -1,4 +1,4 @@
-import { GET_USERS, REGISTER_USER, DELETE_USER, LOADING_USERS, LOGIN_USER } from '../actions/constants';
+import { GET_USERS, DELETE_USER, LOADING_USERS } from '../actions/constants';
 
 const initState = { 
     users: [{}],
@@ -12,16 +12,6 @@ export default (state = initState, action) => {
                 ...state,
                 users: action.payload,
                 loading: false
-            }
-        case REGISTER_USER:
-            return {
-                ...state,
-                user: action.payload
-            }
-        case LOGIN_USER:
-            return {
-                ...state,
-                user: action.payload
             }
         case DELETE_USER:
             return {

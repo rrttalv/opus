@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-import { registerUser } from '../actions/userActions'
+import { registerUser } from '../actions/authActions'
 class RegisterModal extends Component {
     constructor(props){
         super(props);
@@ -31,7 +31,7 @@ class RegisterModal extends Component {
             lastName: this.state.lastName,
             password: this.state.password
         }
-        this.props.registerUser(newUser);
+        //this.props.registerUser(newUser);
         this.hide();
     }
 

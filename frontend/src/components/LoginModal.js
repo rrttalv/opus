@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-import { loginUser } from '../actions/userActions'
+import { loginUser } from '../actions/authActions'
 class LoginModal extends Component {
     constructor(props){
         super(props);
@@ -27,7 +27,7 @@ class LoginModal extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        this.props.loginUser(userInfo);
+        //this.props.loginUser(userInfo);
         this.hide();
     }
 
