@@ -35,13 +35,15 @@ class LoginModal extends Component {
                 name: "email",
                 label: "Email address",
                 placeholder: "Registered email address",
-                required: true
+                required: true,
+                type: "text"
             },
             {   
                 name: "password",
                 label: "Password",
                 placeholder: "Selected password",
-                required: true 
+                required: true,
+                type: "password"
             }
         ]
         return (
@@ -51,11 +53,11 @@ class LoginModal extends Component {
                 <ModalHeader toggle={this.hide}>{this.state.title}</ModalHeader>
                 <ModalBody>
                     <Form onSubmit={this.onSubmit}>
-                        {formSchema.map(({label, placeholder, name}) => (
+                        {formSchema.map(({label, type, placeholder, name}) => (
                             <FormGroup key={label}>
                                 <Label>{label}</Label>
                                 <Input 
-                                    type="text" 
+                                    type={type} 
                                     name={name}
                                     placeholder={placeholder}
                                     onChange={this.handleChange}></Input>

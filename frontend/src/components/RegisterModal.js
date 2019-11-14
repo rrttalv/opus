@@ -45,25 +45,29 @@ class RegisterModal extends Component {
                 name: "firstName",
                 label: "First name",
                 placeholder: "Your first name",
-                required: true
+                required: true,
+                type: "text"
             },
             {   
                 name: "lastName",
                 label: "Last name",
                 placeholder: "Your last name",
-                required: true
+                required: true,
+                type: "text"
             },
             {   
                 name: "email",
                 label: "Email address",
                 placeholder: "Your email address",
-                required: true
+                required: true,
+                type: "text"
             },
             {   
                 name: "password",
                 label: "Password",
                 placeholder: "Select a password",
-                required: true 
+                required: true,
+                type: "password"
             }
         ]
         return (
@@ -77,11 +81,11 @@ class RegisterModal extends Component {
                     </ModalHeader>
                     <ModalBody>
                         <Form>
-                            {formSchema.map(({label, name, placeholder, required}) => (
+                            {formSchema.map(({label, name, type, placeholder, required}) => (
                                 <FormGroup key={label}>
                                     <Label>{label}</Label>
                                     <Input 
-                                    type="text" 
+                                    type={type} 
                                     name={name}
                                     placeholder={placeholder}
                                     onChange={this.handleChange}></Input>

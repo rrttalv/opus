@@ -10,7 +10,7 @@ export default (state = initState, action) => {
         case GET_USERS:
             return {
                 ...state,
-                users: action.payload,
+                users: [action.payload, ...state.users],
                 loading: false
             }
         case REGISTER_USER:
@@ -21,7 +21,7 @@ export default (state = initState, action) => {
         case DELETE_USER:
             return {
                 ...state,
-                users: state.users.filter(user => user.id !== action.payload)
+                users: state.users.filter(user => user._id !== action.payload)
             }
         case LOADING_USERS:
             return {

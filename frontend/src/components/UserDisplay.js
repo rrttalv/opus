@@ -7,9 +7,9 @@ import { PropTypes } from 'prop-types';
 class UserDisplay extends Component {
     
     componentDidMount(){
-        this.props.getUsers();
+        this.props.getUsers(0);
     }
-
+    
     clickDelete = (id) => {
         this.props.deleteUser(id)
     }

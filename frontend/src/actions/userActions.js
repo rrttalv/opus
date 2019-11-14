@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { GET_USERS, REGISTER_USER, DELETE_USER, LOADING_USERS } from './constants';
 
-export const getUsers = () => dispatch => {
+export const getUsers = (page) => dispatch => {
     dispatch(setLoading());
-    axios.get('/api/users/0').then(res => dispatch({
+    axios.get(`/api/users/${page}`).then(res => dispatch({
         type: GET_USERS,
         payload: res.data
     }))
@@ -16,11 +16,11 @@ export const registerUser = (newUser) => dispatch => {
     }))
 };
 
-export const deleteUser = (id) => {
-    return {
+export const deleteUser = (id) => dispatch => {
+    axios.post(`/api/users/delete/${id}`, id).then(res => dispatch({
         type: DELETE_USER,
-        payload: id
-    };
+        payload: res.data
+    }))
 };
 
 export const setLoading = () => {
