@@ -19,7 +19,7 @@ router.post('/register',
     [check('email', 'Please enter a valid email address').exists().isEmail().custom( async (value, { req }) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
         if(account.length > 0){
-            throw new Error("Email already in use!")
+            throw new Error("Email already in use!");
         }else{
             return true;
         }
@@ -57,6 +57,34 @@ router.post('/register',
             }).catch(next);
         }).catch(next);
 
+    }
+})
+
+router.post('/login', [check('email', 'Please enter a valid email').exists().isEmail().custom(async (value, {req}) => {
+        let account = await findByEmail(validator.normalizeEmail(req.body.email));
+        if(account.length > 0){
+            throw new Error("Wrong email or password");
+        }
+        return true;
+    }),
+    check('password', 'Wrong email or password').exists().custom(async (value, {req}) => {
+        let account = await findByEmail(validator.normalizeEmail(req.body.email));
+        if(account.length > 0){
+            comparePassword(req.body.password, account[0].password).then((isMatch) => {
+                if(isMatch){
+                    return isMatch;
+                }
+            }).catch((err) => {
+                throw new Error(err)
+            })
+        }
+    })], (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        console.log(errors);
+        res.json({success: false, message: errors.array()[0].msg});
+    }else{
+        //Send auth token
     }
 })
 

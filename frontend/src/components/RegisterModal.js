@@ -32,7 +32,7 @@ class RegisterModal extends Component {
             password: this.state.password
         }
         this.props.registerUser(newUser);
-        this.hide()
+        this.hide();
     }
 
     handleChange = e => {

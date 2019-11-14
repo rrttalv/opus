@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
 export default mongoose.model('User', userSchema);
 
 export const comparePassword = async (inputPassword, hash) => {
-    return null
+    return await bcrypt.compareSync(inputPassword, hash);
 }
 
 export const hashUserPassword = async (user) => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-
+import { loginUser } from '../actions/userActions'
 class LoginModal extends Component {
     constructor(props){
         super(props);
@@ -21,8 +21,15 @@ class LoginModal extends Component {
         this.setState({modalOpen: false})
     }
 
-    onSubmit = e => {
+    handleSubmit = e => {
         e.preventDefault()
+        const userInfo = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        console.log(userInfo)
+        this.props.loginUser(userInfo);
+        this.hide();
     }
 
     handleChange = e => {
@@ -52,7 +59,7 @@ class LoginModal extends Component {
             <Modal isOpen={this.state.modalOpen} toggle={this.show}>
                 <ModalHeader toggle={this.hide}>{this.state.title}</ModalHeader>
                 <ModalBody>
-                    <Form onSubmit={this.onSubmit}>
+                    <Form>
                         {formSchema.map(({label, type, placeholder, name}) => (
                             <FormGroup key={label}>
                                 <Label>{label}</Label>
@@ -66,7 +73,7 @@ class LoginModal extends Component {
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type="submit" size="md">Login</Button>
+                    <Button type="submit" size="md" onClick={this.handleSubmit}>Login</Button>
                 </ModalFooter>
             </Modal>
             </div>
@@ -74,4 +81,8 @@ class LoginModal extends Component {
     }
 }
 
-export default connect()(LoginModal)
+const mapStateToProps = state => ({
+    hasAuth: state
+})
+
+export default connect(mapStateToProps, {loginUser})(LoginModal)

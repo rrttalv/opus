@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USERS, REGISTER_USER, DELETE_USER, LOADING_USERS } from './constants';
+import { GET_USERS, REGISTER_USER, LOGIN_USER, DELETE_USER, LOADING_USERS } from './constants';
 
 export const getUsers = (page) => dispatch => {
     dispatch(setLoading());
@@ -22,6 +22,13 @@ export const deleteUser = (id) => dispatch => {
         payload: res.data
     }))
 };
+
+export const loginUser = (userData) => dispatch => {
+    axios.post('/auth/login', userData).then(res => dispatch({
+        type: LOGIN_USER,
+        payload: res.data
+    }));
+}
 
 export const setLoading = () => {
     return {
