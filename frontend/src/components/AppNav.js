@@ -7,23 +7,15 @@ import { Collapse,
     Nav,
     NavLink,
     NavItem,
-    Container,
+    Button,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem } from 'reactstrap';
+import { connect } from 'react-redux';
+import RegisterModal from './RegisterModal';
 
 export default class AppNav extends Component {
-
-    state = {
-        isOpen: false
-    }
-
-    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
 
     render() {
         return (
@@ -31,10 +23,10 @@ export default class AppNav extends Component {
         <Navbar color='dark' dark expand="md" className="mb-5 dark">
             <NavbarBrand color="light">Firma</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
+            <Collapse isOpen={this.props.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                     <NavItem>
-                        <NavLink href="/register">Register</NavLink>
+                        <RegisterModal></RegisterModal>
                     </NavItem>
                 </Nav>
             </Collapse>

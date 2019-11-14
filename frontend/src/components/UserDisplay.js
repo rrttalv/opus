@@ -39,8 +39,8 @@ UserDisplay.propTypes = {
     users: PropTypes.object.isRequired
 }
 
-const mapToProps = (state) => ({
+const mapStateToProps = (state) => ({
     users: state
 });
 
-export default connect(mapToProps, { getUsers, deleteUser })(UserDisplay);
+export default connect(mapStateToProps, { getUsers, deleteUser })(UserDisplay);
