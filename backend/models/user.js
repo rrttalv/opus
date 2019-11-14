@@ -39,13 +39,19 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', userSchema);
-export default User;
+export default mongoose.model('User', userSchema);
 
 export const comparePassword = async (inputPassword, hash) => {
     return null
 }
 
-export const addUser = async (user) => {
-    return null
+export const hashUserPassword = async (user) => {
+    let salt = await bcrypt.genSaltSync(10);
+    let hashedPassword = await bcrypt.hashSync(user.password, salt);
+    user.password = hashedPassword;
+    return user;
+}
+
+export const saveNewUser = async (user) => {
+    return await user.save();
 }
