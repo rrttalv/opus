@@ -10,7 +10,7 @@ router.get('/users/:page', (req, res, next) => {
     let limit = 25;
     let page = req.params.page || 0;
     findAllUsers(limit*page).then((users) => {
-        
+        res.json({user: users})
     }).catch(next);
 })
 

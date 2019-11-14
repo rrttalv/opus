@@ -16,19 +16,11 @@ class UserDisplay extends Component {
 
     render() {
         const { users } = this.props.users.user;
-        console.log(users);
+        console.log(users.user)
         return (
             <Container>
                 <ListGroup>
-                    {users.map (({ user }) => 
-                        <ListGroupItem key={user}>
-                            { user.email }
-                            <Button 
-                            color="danger" 
-                            size="md" 
-                            onClick={this.clickDelete.bind(this, user.id)}> X </Button>
-                        </ListGroupItem>
-                    )}
+
                 </ListGroup>
             </Container>
         )

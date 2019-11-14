@@ -3,7 +3,7 @@ import { GET_USERS, REGISTER_USER, DELETE_USER, LOADING_USERS } from './constant
 
 export const getUsers = () => dispatch => {
     dispatch(setLoading());
-    axios.get('/api/users').then(res => dispatch({
+    axios.get('/api/users/0').then(res => dispatch({
         type: GET_USERS,
         payload: res.data
     }))
