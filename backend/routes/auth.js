@@ -92,8 +92,8 @@ router.post('/login',
         trimAndSanitize(req.body).then((body) =>{
             findByEmail(body.email).then((user) => {
                 //ADD A CONFIRMED EMAIL CHECK
-                const jwtToken = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
-                console.log(jwtToken);
+                const id_token = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
+                console.log(id_token);
                 //res.status(200).json({token})
             }).catch(next);
         }).catch(next);

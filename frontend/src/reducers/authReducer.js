@@ -5,7 +5,7 @@ import { REGISTER_FAIL, REGISTER_SUCCESS,
 
 const initState = {
     isAuthenticated: null,
-    token: localStorage.getItem('token'),
+    token: localStorage.getItem('id_token'),
     isLoading: false,
     user: null
 };
@@ -40,6 +40,7 @@ export default (state = initState, action) => {
         case LOGIN_FAIL:
         case REGISTER_FAIL:
         case AUTH_ERROR: {
+            localStorage.clear();
             return{
                 ...state,
                 token: null,
