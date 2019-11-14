@@ -93,7 +93,7 @@ router.post('/login',
             findByEmail(body.email).then((user) => {
                 //ADD A CONFIRMED EMAIL CHECK
                 const id_token = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
-                res.json(id_token)
+                res.json({token: id_token, user: user})
             }).catch(next);
         }).catch(next);
     }

@@ -18,7 +18,6 @@ export default (state = initState, action) => {
                 isLoading: true
             }
         case USER_LOADED:
-            console.log(action.payload)
             return{
                 ...state,
                 isAuthenticated: true,
@@ -31,10 +30,11 @@ export default (state = initState, action) => {
                 isLoading: true
             }
         case LOGIN_SUCCESS:
-            localStorage.setItem('id_token', action.payload);
+            localStorage.setItem('id_token', action.payload.token);
             return{
                 ...state,
-                ...action.payload,
+                token: action.payload.token,
+                user: action.payload.user,
                 isAuthenticated: true,
                 isLoading: false
             }

@@ -5,24 +5,11 @@ import { REGISTER_FAIL, USER_LOADING,
 import axios from 'axios'
 import { getErrors } from './errorActions';
 
-export const getTokenStatus = () => (getState) => {
-    const token = getState().auth.token;
-    const options = {
-        headers: {}
-    }
-    if(token){
-        options.headers['x-auth-token'] = token
-    }
-    return options;
-}
-
-export const getLoginStatus = () => (dispatch) => {
+export const getLoginStatus = () => (dispatch, getState) => {
     // Set state to user loading
-    dispatch({
-        type: USER_LOADING
-    });
-    const options = getTokenStatus();
-    axios.get('/auth/signed', options).then(res => dispatch({
+    var a = getState().auth.token
+    var b = tokenStatus(getState)
+    axios.get('/auth/signed', tokenStatus(getState)).then(res => dispatch({
         type: USER_LOADED,
         payload: res.data
     })).catch((err) => {
@@ -33,6 +20,19 @@ export const getLoginStatus = () => (dispatch) => {
     });
 }
 
+export const tokenStatus = getState => {
+    const token = getState().auth.token;
+    const options = {
+        headers: {
+            'Content-type': 'application/json'
+        }
+    }
+    if(token){
+        options.headers['x-auth-token'] = token
+    }
+    
+    return options;
+}
 
 export const loginUser = (userData) => dispatch => {
     axios.post('/auth/login', userData).then(res => dispatch({
