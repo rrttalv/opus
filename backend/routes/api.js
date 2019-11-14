@@ -3,14 +3,13 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    res.json({message: 'Hello'})
 })
 
 router.get('/users/:page', (req, res, next) => {
     let limit = 25;
     let page = req.params.page || 0;
-    findAllUsers(limit*page).then((users) => {
-        res.json({user: users})
+    findAllUsers(limit*page).then((userList) => {
+        res.json(userList)
     }).catch(next);
 })
 

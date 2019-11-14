@@ -51,7 +51,7 @@ router.post('/register',
                 hashUserPassword(newUser).then((hashedUser) => {
                     saveNewUser(hashedUser).then((savedUser) => {
                         //SEND EMAIL TO USER AT SOME POINT
-                        res.json({user: savedUser})
+                        res.json(user)
                     }).catch(next);
                 }).catch(next);
             }).catch(next);

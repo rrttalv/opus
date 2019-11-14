@@ -15,6 +15,7 @@ class App extends Component{
       <Provider store={store}>
         <div>
           <AppNav/>
+          <UserDisplay/>
         </div>
       </Provider>
     );
