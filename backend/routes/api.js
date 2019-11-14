@@ -12,16 +12,15 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/users/:page', authUser, (req, res, next) => {
-    console.log("here")
     let limit = 25;
     let page = req.params.page || 0;
     findAllUsers(limit*page).then((userList) => {
-        res.json(userList)
+        res.json({userList})
     }).catch(next);
 })
 
 const findAllUsers = async (skip) => {
-    return await User.find({}).skip(skip);
+    return await User.find().skip(skip);
 }
 
 

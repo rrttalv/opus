@@ -4,6 +4,7 @@ import { check, validationResult } from 'express-validator';
 import { genEmailToken } from '../other/tokens';
 import validator from 'validator';
 import config from 'config';
+import jsonwebtoken from 'jsonwebtoken';
 import { trimAndSanitize } from '../other/sanitize';
 
 /*
@@ -16,7 +17,7 @@ const router = express.Router();
 router.post('/register',
     [check('email', 'Please enter a valid email address').exists().isEmail().custom( async (value, { req }) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
-        if(account.length > 0){
+        if(!account){
             throw new Error("Email already in use!");
         }else{
             return true;
@@ -58,14 +59,14 @@ router.post('/register',
 
 router.post('/login', [check('email', 'Please enter a valid email').exists().isEmail().custom(async (value, {req}) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
-        if(account.length === 0){
+        if(!account){
             throw new Error("Wrong email or password");
         }
         return true;
     }),
     check('password', 'Wrong email or password').exists().custom(async (value, {req}) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
-        if(account.length > 0){
+        if(!account){
             comparePassword(req.body.password, account[0].password).then((isMatch) => {
                 if(isMatch){
                     return isMatch;
@@ -82,19 +83,16 @@ router.post('/login', [check('email', 'Please enter a valid email').exists().isE
         trimAndSanitize(req.body).then((body) =>{
             findByEmail(body.email).then((user) => {
                 //ADD A CONFIRMED EMAIL CHECK
-                const token = jsonwebtoken.sign(
-                    {user: user}, 
-                    config.get('jwtS'), 
-                    {expiresIn: 604800000}
-                )
-                res.status(200).json({token})
+                const jwtToken = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
+                console.log(jwtToken);
+                //res.status(200).json({token})
             }).catch(next);
         }).catch(next);
     }
 })
 
 const findByEmail = async (emailAddress) => {
-    return await User.find({email: emailAddress});
+    return await User.findOne({email: emailAddress});
 }
 
 export default router;
