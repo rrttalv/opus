@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment} from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Collapse,
     Navbar,
@@ -17,7 +17,30 @@ import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
 export default class AppNav extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            isOpen: false
+        }
+    }
+
+    toggle = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    };
+
     render() {
+        const unauthLinks = (
+            <Fragment>
+                <NavItem style={{marginRight: '0.5rem'}}>
+                    <RegisterModal></RegisterModal>
+                </NavItem>
+                <NavItem>
+                    <LoginModal></LoginModal>
+                </NavItem>
+            </Fragment>
+        )
         return (
         <div>
         <Navbar color='dark' dark expand="md" className="mb-5 dark">
@@ -25,12 +48,7 @@ export default class AppNav extends Component {
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.props.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
-                    <NavItem>
-                        <RegisterModal></RegisterModal>
-                    </NavItem>
-                    <NavItem>
-                        <LoginModal></LoginModal>
-                    </NavItem>
+                    {unauthLinks}
                 </Nav>
             </Collapse>
         </Navbar>

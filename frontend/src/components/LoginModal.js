@@ -2,21 +2,6 @@ import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 
-const formSchema = [
-    {   
-        name: "email",
-        label: "Email address",
-        placeholder: "Registered email address",
-        required: true
-    },
-    {   
-        name: "password",
-        label: "Password",
-        placeholder: "Selected password",
-        required: true 
-    }
-]
-
 class LoginModal extends Component {
     constructor(props){
         super(props);
@@ -45,6 +30,20 @@ class LoginModal extends Component {
     }
 
     render() {
+        const formSchema = [
+            {   
+                name: "email",
+                label: "Email address",
+                placeholder: "Registered email address",
+                required: true
+            },
+            {   
+                name: "password",
+                label: "Password",
+                placeholder: "Selected password",
+                required: true 
+            }
+        ]
         return (
             <div>
             <Button onClick={this.show}>Login</Button>

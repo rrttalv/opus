@@ -8,6 +8,12 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String
     },
+    firstName: {
+        type: String
+    },
+    lastName: {
+        type: String
+    },
     forgot_token: {
         time: {
             type: Date

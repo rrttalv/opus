@@ -2,33 +2,6 @@ import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 
-const formSchema = [    
-    {   
-        name: "firstName",
-        label: "First name",
-        placeholder: "Your first name",
-        required: true
-    },
-    {   
-        name: "lastName",
-        label: "Last name",
-        placeholder: "Your last name",
-        required: true
-    },
-    {   
-        name: "email",
-        label: "Email address",
-        placeholder: "Your email address",
-        required: true
-    },
-    {   
-        name: "password",
-        label: "Password",
-        placeholder: "Select a password",
-        required: true 
-    }
-]
-
 class RegisterModal extends Component {
     constructor(props){
         super(props);
@@ -52,6 +25,12 @@ class RegisterModal extends Component {
 
     onSubmit = e => {
         e.preventDefault()
+        const newUser = {
+            email: this.state.email,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            password: this.state.password
+        }
     }
 
     handleChange = e => {
@@ -59,6 +38,32 @@ class RegisterModal extends Component {
     }
 
     render() {
+        const formSchema = [    
+            {   
+                name: "firstName",
+                label: "First name",
+                placeholder: "Your first name",
+                required: true
+            },
+            {   
+                name: "lastName",
+                label: "Last name",
+                placeholder: "Your last name",
+                required: true
+            },
+            {   
+                name: "email",
+                label: "Email address",
+                placeholder: "Your email address",
+                required: true
+            },
+            {   
+                name: "password",
+                label: "Password",
+                placeholder: "Select a password",
+                required: true 
+            }
+        ]
         return (
             <div>
                 <Button onClick={this.show}>Register</Button>
