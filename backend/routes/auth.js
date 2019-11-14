@@ -6,6 +6,7 @@ import validator from 'validator';
 import config from 'config';
 import jsonwebtoken from 'jsonwebtoken';
 import { trimAndSanitize } from '../other/sanitize';
+import { authUser } from '../other/middleware';
 
 /*
     All unauthenticated routes live in this file.
@@ -13,8 +14,11 @@ import { trimAndSanitize } from '../other/sanitize';
 
 const router = express.Router();
 
-//Registration route.
 router.post('/register',
+    /*
+        This route takes the registration data and turns it into a user or sends an error.
+        Validation is done with express-validator.
+    */
     [check('email', 'Please enter a valid email address').exists().isEmail().custom( async (value, { req }) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
         if(!account){
@@ -57,7 +61,12 @@ router.post('/register',
     }
 })
 
-router.post('/login', [check('email', 'Please enter a valid email').exists().isEmail().custom(async (value, {req}) => {
+router.post('/login', 
+    /*
+        This route takes login data and either sends back a JWT token or an error.
+        Validation is done with express-validator.
+    */
+    [check('email', 'Please enter a valid email').exists().isEmail().custom(async (value, {req}) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
         if(!account){
             throw new Error("Wrong email or password");
@@ -91,7 +100,16 @@ router.post('/login', [check('email', 'Please enter a valid email').exists().isE
     }
 })
 
+router.get('/signed', authUser, (req, res, next) => {
+    findByEmail(req.user.email).then((user) => {
+        res.json(user);
+    });
+})
+
 const findByEmail = async (emailAddress) => {
+    /*
+        Async function to find one user by their email address.
+    */
     return await User.findOne({email: emailAddress});
 }
 
