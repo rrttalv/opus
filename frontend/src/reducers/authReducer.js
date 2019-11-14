@@ -4,8 +4,8 @@ import { REGISTER_FAIL, REGISTER_SUCCESS,
         LOGIN_FAIL, AUTH_ERROR } from '../actions/constants';
 
 const initState = {
-    isAuthenticated: null,
     token: localStorage.getItem('id_token'),
+    isAuthenticated: null,
     isLoading: false,
     user: null
 };
@@ -18,11 +18,12 @@ export default (state = initState, action) => {
                 isLoading: true
             }
         case USER_LOADED:
+            console.log(action.payload)
             return{
                 ...state,
                 isAuthenticated: true,
                 isLoading: true,
-                currentUser: action.payload
+                user: action.payload
             }
         case REGISTER_LOADING:
             return{

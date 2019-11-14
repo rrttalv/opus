@@ -8,7 +8,7 @@ export const authUser = (req, res, next) => {
     }else{
         try{
             const decodedToken = jsonwebtoken.verify(token, config.get('jwtS'));
-            req.user = decodedToken;
+            req.user = decodedToken.user;
             next();
         }catch(err){
             res.status(400).json({success: false, message: "Please login again"})

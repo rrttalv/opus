@@ -93,8 +93,7 @@ router.post('/login',
             findByEmail(body.email).then((user) => {
                 //ADD A CONFIRMED EMAIL CHECK
                 const id_token = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
-                console.log(id_token)
-                res.status(200).json(id_token)
+                res.json(id_token)
             }).catch(next);
         }).catch(next);
     }
@@ -103,7 +102,7 @@ router.post('/login',
 router.get('/signed', authUser, (req, res, next) => {
     findByEmail(req.user.email).then((user) => {
         if(user){
-            res.status(200).json(user);
+            res.json(user);
         }
     }).catch(next);
 })
