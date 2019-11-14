@@ -6,6 +6,7 @@ import validator from 'validator';
 
 const router = express.Router();
 
+//Trims all objects in request body, if is a string then will also sanitize the string value
 const trimReqBody = async (body) => {
     Object.keys(body).map((key) => {
         body[key] = typeof body[key] === 'string' && key !== 'password' ? validator.trim(validator.blacklist(body[key], '<>$')) : validator.trim(body[key])
@@ -13,12 +14,12 @@ const trimReqBody = async (body) => {
     return body;
 }
 
-/* Registration route.*/
+//Registration route.
 router.post('/register',
     [check('email', 'Please enter a valid email address').exists().isEmail().custom( async (value, { req }) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
         if(account){
-            return new Error("Email already in use!")
+            throw new Error("Email already in use!")
         }else{
             return true;
         }
@@ -46,7 +47,7 @@ router.post('/register',
                         time: expiryDate
                     }
                 })
-                //Has password
+                //Hash password
                 hashUserPassword(newUser).then((hashedUser) => {
                     saveNewUser(hashedUser).then((savedUser) => {
                         //SEND EMAIL TO USER AT SOME POINT
@@ -57,14 +58,6 @@ router.post('/register',
         }).catch(next);
 
     }
-    /*
-    findByEmail(email).then((user) => {
-        if(user){
-            res.status(400).json({status: false, message: "Email already in use!"});
-        }else{
-            res.json({status: true, message: "User account created"})
-        }
-    }).catch(next);*/
 })
 
 const findByEmail = async (emailAddress) => {
