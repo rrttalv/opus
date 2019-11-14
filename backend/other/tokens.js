@@ -1,6 +1,7 @@
 import crypto from 'crypto';
+import config from 'config';
 
-const key = 'fGFPA4BT1Wg';
+const key = config.get('randomSecret');
 const algo = 'aes256';
 
 export const genEmailToken = async () => {

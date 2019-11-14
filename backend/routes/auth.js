@@ -3,6 +3,8 @@ import express from 'express';
 import { check, validationResult } from 'express-validator';
 import { genEmailToken } from '../other/tokens';
 import validator from 'validator';
+import config from 'config';
+import jsonwebtoken from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -25,11 +27,10 @@ router.post('/register',
         }
     }),
     check('password', 'Make sure your password is at least 8 characters long!').exists().isLength(8)], (req, res, next) => {
-    const email = validator.normalizeEmail(req.body.email);
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         console.log(errors);
-        res.json({success: false, message: errors.array()[0].msg});
+        res.status(400).json({success: false, message: errors.array()[0].msg});
     }else{
         trimReqBody(req.body).then((body) => {
             //Set verification token to expire in 7 days
@@ -51,7 +52,7 @@ router.post('/register',
                 hashUserPassword(newUser).then((hashedUser) => {
                     saveNewUser(hashedUser).then((savedUser) => {
                         //SEND EMAIL TO USER AT SOME POINT
-                        res.json(user)
+                        res.status(200).json(user)
                     }).catch(next);
                 }).catch(next);
             }).catch(next);
@@ -62,7 +63,7 @@ router.post('/register',
 
 router.post('/login', [check('email', 'Please enter a valid email').exists().isEmail().custom(async (value, {req}) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
-        if(account.length > 0){
+        if(account.length === 0){
             throw new Error("Wrong email or password");
         }
         return true;
@@ -81,10 +82,19 @@ router.post('/login', [check('email', 'Please enter a valid email').exists().isE
     })], (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        console.log(errors);
-        res.json({success: false, message: errors.array()[0].msg});
+        res.status(400).json({success: false, message: errors.array()[0].msg});
     }else{
-        //Send auth token
+        trimReqBody(req.body).then((body) =>{
+            findByEmail(body.email).then((user) => {
+                //ADD A CONFIRMED EMAIL CHECK
+                const token = jsonwebtoken.sign(
+                    {user: user}, 
+                    config.get('jwtS'), 
+                    {expiresIn: 604800000}
+                )
+                res.status(200).json({token})
+            }).catch(next);
+        }).catch(next);
     }
 })
 

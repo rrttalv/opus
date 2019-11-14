@@ -27,7 +27,6 @@ class LoginModal extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        console.log(userInfo)
         this.props.loginUser(userInfo);
         this.hide();
     }

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { GET_USERS, REGISTER_USER, LOGIN_USER, DELETE_USER, LOADING_USERS } from './constants';
 
 export const getUsers = (page) => dispatch => {
-    dispatch(setLoading());
     axios.get(`/api/users/${page}`).then(res => dispatch({
         type: GET_USERS,
         payload: res.data
