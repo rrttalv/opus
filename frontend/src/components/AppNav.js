@@ -14,7 +14,7 @@ import { Collapse,
     DropdownItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import RegisterModal from './RegisterModal';
-
+import LoginModal from './LoginModal';
 export default class AppNav extends Component {
 
     render() {
@@ -27,6 +27,9 @@ export default class AppNav extends Component {
                 <Nav className="ml-auto" navbar>
                     <NavItem>
                         <RegisterModal></RegisterModal>
+                    </NavItem>
+                    <NavItem>
+                        <LoginModal></LoginModal>
                     </NavItem>
                 </Nav>
             </Collapse>

@@ -4,23 +4,27 @@ import { connect } from 'react-redux';
 
 const formSchema = [    
     {   
-    name: "firstName",
-    label: "First name",
-    required: true
+        name: "firstName",
+        label: "First name",
+        placeholder: "Your first name",
+        required: true
     },
     {   
-    name: "lastName",
-    label: "Last name",
-    required: true
+        name: "lastName",
+        label: "Last name",
+        placeholder: "Your last name",
+        required: true
     },
     {   
         name: "email",
         label: "Email address",
+        placeholder: "Your email address",
         required: true
     },
     {   
         name: "password",
         label: "Password",
+        placeholder: "Select a password",
         required: true 
     }
 ]
@@ -30,6 +34,7 @@ class RegisterModal extends Component {
         super(props);
         this.state = {
             modalOpen: false,
+            title: 'Register',
             email: '',
             password: '',
             firstName: '',
@@ -49,6 +54,10 @@ class RegisterModal extends Component {
         e.preventDefault()
     }
 
+    handleChange = e => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
     render() {
         return (
             <div>
@@ -57,19 +66,25 @@ class RegisterModal extends Component {
                 isOpen={this.state.modalOpen}
                 toggle={this.show}>
                     <ModalHeader toggle={this.hide}>
-                        {this.props.title}
+                        {this.state.title}
                     </ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.onSubmit}>
-                            {formSchema.map(({label, name, required}) => (
+                            {formSchema.map(({label, name, placeholder, required}) => (
                                 <FormGroup key={label}>
                                     <Label>{label}</Label>
-                                    <Input type="text" name={name}></Input>
+                                    <Input 
+                                    type="text" 
+                                    name={name}
+                                    placeholder={placeholder}
+                                    onChange={this.handleChange}></Input>
                                 </FormGroup>
                             ))}
-                            <Button type="submit" size="md">Register</Button>
                         </Form>
                     </ModalBody>
+                    <ModalFooter>
+                        <Button type="submit" size="md">Register</Button>
+                    </ModalFooter>
                 </Modal>
             </div>
         )
