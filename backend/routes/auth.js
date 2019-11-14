@@ -18,7 +18,7 @@ const trimReqBody = async (body) => {
 router.post('/register',
     [check('email', 'Please enter a valid email address').exists().isEmail().custom( async (value, { req }) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
-        if(account){
+        if(account.length > 0){
             throw new Error("Email already in use!")
         }else{
             return true;
@@ -51,7 +51,7 @@ router.post('/register',
                 hashUserPassword(newUser).then((hashedUser) => {
                     saveNewUser(hashedUser).then((savedUser) => {
                         //SEND EMAIL TO USER AT SOME POINT
-                        res.json({savedUser})
+                        res.json({user: savedUser})
                     }).catch(next);
                 }).catch(next);
             }).catch(next);
