@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import AppNav from "./components/AppNav";
 
-export default class App extends Component{
+import AppNav from "./components/AppNav";
+import UserDisplay from "./components/UserDisplay";
+
+import { Provider } from 'react-redux';
+import store from './store';
+
+class App extends Component{
   render(){
     return (
-      <div>
-        <AppNav/>
-      </div>
+      <Provider store={store}>
+        <div>
+          <AppNav/>
+          <UserDisplay/>
+        </div>
+      </Provider>
     );
   }
 }
+
+export default App;

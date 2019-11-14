@@ -28,8 +28,8 @@ export default class AppNav extends Component {
     render() {
         return (
         <div>
-        <Navbar color="dark" dark expand="md" className="mb-5">
-            <NavbarBrand color="light" light>Firma</NavbarBrand>
+        <Navbar color='dark' dark expand="md" className="mb-5 dark">
+            <NavbarBrand color="light">Firma</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
