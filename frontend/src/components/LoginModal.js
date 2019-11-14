@@ -1,24 +1,22 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalFooter, ModalBody, NavLink, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions'
 class LoginModal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            modalopen: false,
+            modalOpen: false,
             title: 'Login',
             email: '',
             password: ''
         }
     }
 
-    show = () => {
-        this.setState({modalOpen: true});
-    }
-
-    hide = () => {
-        this.setState({modalOpen: false})
+    toggle = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        });
     }
 
     handleSubmit = e => {
@@ -27,8 +25,9 @@ class LoginModal extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        //this.props.loginUser(userInfo);
-        this.hide();
+        this.props.loginUser(userInfo);
+        this.toggle();
+        console.log(this.props)
     }
 
     handleChange = e => {
@@ -54,9 +53,9 @@ class LoginModal extends Component {
         ]
         return (
             <div>
-            <Button onClick={this.show}>Login</Button>
-            <Modal isOpen={this.state.modalOpen} toggle={this.show}>
-                <ModalHeader toggle={this.hide}>{this.state.title}</ModalHeader>
+            <NavLink onClick={this.toggle}>Login</NavLink>
+            <Modal isOpen={this.state.modalOpen} toggle={this.toggle}>
+                <ModalHeader toggle={this.toggle}>{this.state.title}</ModalHeader>
                 <ModalBody>
                     <Form>
                         {formSchema.map(({label, type, placeholder, name}) => (
@@ -81,7 +80,8 @@ class LoginModal extends Component {
 }
 
 const mapStateToProps = state => ({
-    hasAuth: state
+    isAuth: state.auth.isAuthenticated,
+    error: state.error
 })
 
 export default connect(mapStateToProps, {loginUser})(LoginModal)

@@ -21,7 +21,7 @@ app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 
 app.use((err, req, res, next) => {
-    res.status(404).json({status: false, message: "Something went wrong!"});
+    //res.status(404).json({status: false, message: "Something went wrong!"});
 });
 
 app.listen(port, () => console.log('server started on port ' + port));

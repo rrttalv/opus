@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input, NavLink } from 'reactstrap';
 import { connect } from 'react-redux';
 import { registerUser } from '../actions/authActions'
 class RegisterModal extends Component {
@@ -15,12 +15,11 @@ class RegisterModal extends Component {
         }
     }
 
-    show = () => {
-        this.setState({modalOpen: true});
-    }
-
-    hide = () => {
-        this.setState({modalOpen: false})
+    toggle = () => {
+        console.log(this.state)
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        });
     }
 
     handleSubmit = e => {
@@ -31,8 +30,8 @@ class RegisterModal extends Component {
             lastName: this.state.lastName,
             password: this.state.password
         }
-        //this.props.registerUser(newUser);
-        this.hide();
+        this.props.registerUser(newUser);
+        this.toggle();
     }
 
     handleChange = e => {
@@ -72,11 +71,11 @@ class RegisterModal extends Component {
         ]
         return (
             <div>
-                <Button onClick={this.show}>Register</Button>
+                <NavLink onClick={this.toggle}>Register</NavLink>
                 <Modal 
                 isOpen={this.state.modalOpen}
-                toggle={this.show}>
-                    <ModalHeader toggle={this.hide}>
+                toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>
                         {this.state.title}
                     </ModalHeader>
                     <ModalBody>
@@ -103,7 +102,8 @@ class RegisterModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    users: state
+    isAuth: state.auth.isAuthenticated,
+    error: state.error
 })
 
 export default connect(mapStateToProps, {registerUser})(RegisterModal)

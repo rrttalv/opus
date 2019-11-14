@@ -30,6 +30,7 @@ export default (state = initState, action) => {
                 isLoading: true
             }
         case LOGIN_SUCCESS:
+            localStorage.setItem('id_token', action.payload);
             return{
                 ...state,
                 ...action.payload,

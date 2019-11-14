@@ -1,4 +1,4 @@
-import React, { Component, Fragment} from 'react'
+import React, { Component, Fragment } from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Collapse,
     Navbar,
@@ -15,28 +15,29 @@ import { Collapse,
 import { connect } from 'react-redux';
 import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
-export default class AppNav extends Component {
 
+class AppNav extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isOpen: false
+            visible: false
         }
     }
-
+    
     toggle = () => {
         this.setState({
-            isOpen: !this.state.isOpen
+            visible: !this.state.visible
         });
-    };
+    }
 
     render() {
+
         const unauthLinks = (
             <Fragment>
-                <NavItem style={{marginRight: '0.5rem'}}>
+                <NavItem href="#" style={{marginRight: '0.5rem'}}>
                     <RegisterModal></RegisterModal>
                 </NavItem>
-                <NavItem>
+                <NavItem href="#">
                     <LoginModal></LoginModal>
                 </NavItem>
             </Fragment>
@@ -45,8 +46,8 @@ export default class AppNav extends Component {
         <div>
         <Navbar color='dark' dark expand="md" className="mb-5 dark">
             <NavbarBrand color="light">Firma</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.props.isOpen} navbar>
+            <NavbarToggler onClick={this.toggle}></NavbarToggler>
+            <Collapse isOpen={this.state.visible} navbar>
                 <Nav className="ml-auto" navbar>
                     {unauthLinks}
                 </Nav>
@@ -56,3 +57,5 @@ export default class AppNav extends Component {
         )
     }
 }
+
+export default AppNav;
