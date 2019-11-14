@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-
+import { registerUser } from '../actions/userActions'
 class RegisterModal extends Component {
     constructor(props){
         super(props);
@@ -23,7 +23,7 @@ class RegisterModal extends Component {
         this.setState({modalOpen: false})
     }
 
-    onSubmit = e => {
+    handleSubmit = e => {
         e.preventDefault()
         const newUser = {
             email: this.state.email,
@@ -31,6 +31,8 @@ class RegisterModal extends Component {
             lastName: this.state.lastName,
             password: this.state.password
         }
+        this.props.registerUser(newUser);
+        this.hide()
     }
 
     handleChange = e => {
@@ -74,7 +76,7 @@ class RegisterModal extends Component {
                         {this.state.title}
                     </ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.onSubmit}>
+                        <Form>
                             {formSchema.map(({label, name, placeholder, required}) => (
                                 <FormGroup key={label}>
                                     <Label>{label}</Label>
@@ -88,7 +90,7 @@ class RegisterModal extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button type="submit" size="md">Register</Button>
+                        <Button type="submit" onClick={this.handleSubmit} size="md">Register</Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -96,4 +98,8 @@ class RegisterModal extends Component {
     }
 }
 
-export default connect()(RegisterModal)
+const mapStateToProps = (state) => ({
+    users: state
+})
+
+export default connect(mapStateToProps, {registerUser})(RegisterModal)

@@ -1,15 +1,19 @@
-import { GET_USERS, REGISTER_USER, DELETE_USER } from './constants';
+import axios from 'axios';
+import { GET_USERS, REGISTER_USER, DELETE_USER, LOADING_USERS } from './constants';
 
-export const getUsers = () => {
-    return {
-        type: GET_USERS
-    };
+export const getUsers = () => dispatch => {
+    dispatch(setLoading());
+    axios.get('/api/users').then(res => dispatch({
+        type: GET_USERS,
+        payload: res.data
+    }))
 };
 
-export const registerUser = () => {
-    return {
-        type: REGISTER_USER
-    };
+export const registerUser = (newUser) => dispatch => {
+    axios.post('/auth/register', newUser).then(res => dispatch({
+        type: REGISTER_USER,
+        payload: res.data
+    }))
 };
 
 export const deleteUser = (id) => {
@@ -18,3 +22,9 @@ export const deleteUser = (id) => {
         payload: id
     };
 };
+
+export const setLoading = () => {
+    return {
+        type: LOADING_USERS
+    }
+}

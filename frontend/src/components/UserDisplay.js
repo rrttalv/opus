@@ -36,6 +36,7 @@ class UserDisplay extends Component {
 
 UserDisplay.propTypes = {
     getUsers: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
     users: PropTypes.object.isRequired
 }
 
