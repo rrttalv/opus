@@ -4,6 +4,7 @@ import { REGISTER_FAIL, USER_LOADING,
         USER_LOADED} from './constants';
 import axios from 'axios'
 import { getErrors } from './errorActions';
+import { history } from '../index';
 
 export const getLoginStatus = () => (dispatch, getState) => {
     // Set state to user loading
@@ -33,10 +34,13 @@ export const tokenStatus = getState => {
 }
 
 export const loginUser = (userData) => dispatch => {
-    axios.post('/auth/login', userData).then(res => dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-    })).catch((err) => {
+    axios.post('/auth/login', userData).then(res => {
+        history.push('/dashboard')
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        })
+    }).catch((err) => {
         dispatch(getErrors(err.response.data.message, err.response.status, 'LOGIN_FAIL'));
         dispatch({
             type: LOGIN_FAIL

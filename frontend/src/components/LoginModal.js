@@ -15,8 +15,10 @@ class LoginModal extends Component {
                 this.setState({error: false})
             }
         }
+        console.log(this.props)
         if(this.state.modalOpen){
             if(this.props.isAuth){
+                this.props.history.push('/dashboard')
                 this.toggle();
             }
         }
