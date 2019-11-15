@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions'
 import ErrorDisplay from './ErrorDisplay';
 import { clearAllErrors } from '../actions/errorActions';
-class LoginModal extends Component {
 
+class LoginModal extends Component {
     componentDidUpdate(errorState) {
-        
         if(this.props.error !== errorState.error){
             if(this.props.error.id === 'LOGIN_FAIL'){
                 this.setState({error: true, errorMessage: this.props.error.message});
