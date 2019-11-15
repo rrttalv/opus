@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input, NavLink } from 'reactstrap';
 import { connect } from 'react-redux';
-import { registerUser } from '../actions/authActions'
+import { registerUser } from '../actions/authActions';
+import ErrorDisplay from './ErrorDisplay';
+import { clearAllErrors } from '../actions/errorActions';
 class RegisterModal extends Component {
     constructor(props){
         super(props);
@@ -11,12 +13,30 @@ class RegisterModal extends Component {
             email: '',
             password: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            error: false,
+            errorMessage: ''
+        }
+    }
+
+    componentDidUpdate(errorState) {
+        if(this.props.error !== errorState.error){
+            if(this.props.error.id === 'REGISTER_FAIL'){
+                this.setState({error: true, errorMessage: this.props.error.message});
+            }else{
+                this.setState({error: false, errorMessage: ''})
+            }
+        }
+
+        if(this.state.modalOpen){
+            if(this.props.isAuth){
+                this.toggle();
+            }
         }
     }
 
     toggle = () => {
-        console.log(this.state)
+        this.props.clearAllErrors();
         this.setState({
             modalOpen: !this.state.modalOpen
         });
@@ -31,7 +51,6 @@ class RegisterModal extends Component {
             password: this.state.password
         }
         this.props.registerUser(newUser);
-        this.toggle();
     }
 
     handleChange = e => {
@@ -79,6 +98,7 @@ class RegisterModal extends Component {
                         {this.state.title}
                     </ModalHeader>
                     <ModalBody>
+                    <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
                         <Form>
                             {formSchema.map(({label, name, type, placeholder, required}) => (
                                 <FormGroup key={label}>
@@ -106,4 +126,4 @@ const mapStateToProps = (state) => ({
     error: state.error
 })
 
-export default connect(mapStateToProps, {registerUser})(RegisterModal)
+export default connect(mapStateToProps, {registerUser, clearAllErrors})(RegisterModal)

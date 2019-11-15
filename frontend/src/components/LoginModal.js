@@ -14,8 +14,6 @@ class LoginModal extends Component {
                 this.setState({error: false})
             }
         }
-
-        console.log(this.props.isAuth)
         if(this.state.modalOpen){
             if(this.props.isAuth){
                 this.toggle();

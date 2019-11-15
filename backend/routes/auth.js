@@ -21,7 +21,7 @@ router.post('/register',
     */
     [check('email', 'Please enter a valid email address').exists().isEmail().custom( async (value, { req }) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
-        if(!account){
+        if(account){
             throw new Error("Email already in use!");
         }else{
             return true;
