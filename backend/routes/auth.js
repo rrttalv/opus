@@ -30,7 +30,8 @@ router.post('/register',
     check('password', 'Make sure your password is at least 8 characters long!').exists().isLength(8)], (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        res.status(400).json({message: errors.array()[0].msg});
+        let message = errors.array()[0].msg;
+        res.status(400).json({message: message});
     }else{
         trimAndSanitize(req.body).then((body) => {
             //Set verification token to expire in 7 days
@@ -87,7 +88,8 @@ router.post('/login',
     })], (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        res.status(400).json({message: errors.array()[0].msg});
+        let message = errors.array()[0].msg;
+        res.status(400).json({message: message);
     }else{
         trimAndSanitize(req.body).then((body) =>{
             findByEmail(body.email).then((user) => {

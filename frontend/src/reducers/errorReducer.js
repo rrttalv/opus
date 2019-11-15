@@ -8,7 +8,7 @@ const initState = {
 
 export default (state = initState, action) => {
     switch(action.type){
-        case CLEAR_ERRORS:
+        case GET_ERRORS:
             return{
                 message: action.payload.message,
                 id: action.payload.id,
@@ -16,7 +16,7 @@ export default (state = initState, action) => {
             }
         case CLEAR_ERRORS: 
             return{
-                msg: {},
+                message: {},
                 status: null,
                 id: null
             }

@@ -3,13 +3,22 @@ import { Button, Modal, ModalHeader, ModalFooter, ModalBody, NavLink, FormGroup,
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions'
 class LoginModal extends Component {
+
+    componentDidUpdate(errorState) {
+        if(this.props.error !== errorState.error){
+            this.setState({message: this.props.error.message});
+        }
+        this.setState({message: null});
+    }
+
     constructor(props){
         super(props);
         this.state = {
             modalOpen: false,
             title: 'Login',
             email: '',
-            password: ''
+            password: '',
+            errorMessage: ''
         }
     }
 
