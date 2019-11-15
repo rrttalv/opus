@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions'
 import ErrorDisplay from './ErrorDisplay';
 import { clearAllErrors } from '../actions/errorActions';
+import { PropTypes } from 'prop-types';
 
 class LoginModal extends Component {
     componentDidUpdate(errorState) {
@@ -14,7 +15,6 @@ class LoginModal extends Component {
                 this.setState({error: false})
             }
         }
-        console.log(this.props)
         if(this.state.modalOpen){
             if(this.props.isAuth){
                 this.props.history.push('/dashboard')
@@ -99,6 +99,13 @@ class LoginModal extends Component {
             </div>
         )
     }
+}
+
+LoginModal.propTypes = {
+    clearAllErrors: PropTypes.func.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    isAuth: PropTypes.bool,
+    error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

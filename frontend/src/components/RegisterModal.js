@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { registerUser } from '../actions/authActions';
 import ErrorDisplay from './ErrorDisplay';
 import { clearAllErrors } from '../actions/errorActions';
+import { PropTypes } from 'prop-types';
 class RegisterModal extends Component {
     constructor(props){
         super(props);
@@ -120,6 +121,13 @@ class RegisterModal extends Component {
             </div>
         )
     }
+}
+
+RegisterModal.propTypes = {
+    clearAllErrors: PropTypes.func.isRequired,
+    registerUser: PropTypes.func.isRequired,
+    isAuth: PropTypes.bool,
+    error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
