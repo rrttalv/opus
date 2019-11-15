@@ -7,12 +7,17 @@ import Dashboard from '../src/components/Dashboard';
 
 class Routes extends Component {
     render() {
-        return (
-            <div>
-                <Route exact path="/" component={Home} />
-                <LoggedInRoute exact authenticated = {() => this.props.auth} path="/dashboard" component={Dashboard} />
-            </div>
-        )
+        if(this.props.auth !== null){
+            const { auth } = this.props;
+            return (
+                <div>
+                    <Route exact path="/" component={Home} />
+                    <LoggedInRoute exact authenticated = {() => auth} path="/dashboard" component={Dashboard} />
+                </div>
+            )
+        }
+        return <div></div>
+
     }
 }
 
@@ -22,4 +27,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(Routes)
+export default connect(mapStateToProps, null, null, {pure: false})(Routes)

@@ -2,7 +2,7 @@ import { GET_USERS, DELETE_USER, LOADING_USERS } from '../actions/constants';
 
 const initState = { 
     users: [{}],
-    loading: false
+    loading: true
 }
 
 export default (state = initState, action) => {
@@ -10,7 +10,7 @@ export default (state = initState, action) => {
         case GET_USERS:
             return {
                 ...state,
-                users: action.payload,
+                users: action.payload.userList,
                 loading: false
             }
         case DELETE_USER:

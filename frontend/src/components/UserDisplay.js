@@ -18,15 +18,11 @@ class UserDisplay extends Component {
     }
 
     render() {
-        const { users } = this.props.users.user;
+        const { users, loading } = this.props.users.user;
+        console.log(users)
         return (
             <Container>
-                <ListGroup>
-                    {users.map((element, i) => (
-                        <ListGroupItem key={i}>
-                            <h3>{element.email}</h3>
-                        </ListGroupItem>
-                    ))}
+                <ListGroup>{ !loading ? users.map((element, i) => (<ListGroupItem key={i}><h3>{element.email}</h3></ListGroupItem>)) : <div><p>Loading</p></div>}
                 </ListGroup>
             </Container>
         )
