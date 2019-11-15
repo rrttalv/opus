@@ -2,13 +2,25 @@ import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, NavLink, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions'
+import ErrorDisplay from './ErrorDisplay';
 class LoginModal extends Component {
 
     componentDidUpdate(errorState) {
+        
         if(this.props.error !== errorState.error){
-            this.setState({message: this.props.error.message});
+            if(this.props.error.id === 'LOGIN_FAIL'){
+                this.setState({error: true, errorMessage: this.props.error.message});
+            }else{
+                this.setState({error: false})
+            }
         }
-        this.setState({message: null});
+
+        console.log(this.props.isAuth)
+        if(this.state.modalOpen){
+            if(this.props.isAuth){
+                this.toggle();
+            }
+        }
     }
 
     constructor(props){
@@ -18,6 +30,7 @@ class LoginModal extends Component {
             title: 'Login',
             email: '',
             password: '',
+            error: false,
             errorMessage: ''
         }
     }
@@ -35,8 +48,6 @@ class LoginModal extends Component {
             password: this.state.password
         }
         this.props.loginUser(userInfo);
-        this.toggle();
-        console.log(this.props)
     }
 
     handleChange = e => {
@@ -66,6 +77,7 @@ class LoginModal extends Component {
             <Modal isOpen={this.state.modalOpen} toggle={this.toggle}>
                 <ModalHeader toggle={this.toggle}>{this.state.title}</ModalHeader>
                 <ModalBody>
+                <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
                     <Form>
                         {formSchema.map(({label, type, placeholder, name}) => (
                             <FormGroup key={label}>

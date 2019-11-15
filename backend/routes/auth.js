@@ -76,20 +76,19 @@ router.post('/login',
     }),
     check('password', 'Wrong email or password').exists().custom(async (value, {req}) => {
         let account = await findByEmail(validator.normalizeEmail(req.body.email));
-        if(!account){
-            comparePassword(req.body.password, account[0].password).then((isMatch) => {
-                if(isMatch){
-                    return isMatch;
-                }
-            }).catch((err) => {
-                throw new Error(err)
-            })
+        if(account){
+            let passwordMatch = await comparePassword(req.body.password, account.password);
+            if(!passwordMatch){
+                throw new Error("Wrong email or password");
+            }
+            return passwordMatch;
         }
+        return true;
     })], (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         let message = errors.array()[0].msg;
-        res.status(400).json({message: message);
+        res.status(400).json({message: message});
     }else{
         trimAndSanitize(req.body).then((body) =>{
             findByEmail(body.email).then((user) => {

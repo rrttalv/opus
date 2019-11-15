@@ -7,17 +7,17 @@ import { getErrors } from './errorActions';
 
 export const getLoginStatus = () => (dispatch, getState) => {
     // Set state to user loading
-    var a = getState().auth.token
-    var b = tokenStatus(getState)
-    axios.get('/auth/signed', tokenStatus(getState)).then(res => dispatch({
-        type: USER_LOADED,
-        payload: res.data
-    })).catch((err) => {
-        dispatch(getErrors(err.response.data.message, err.response.status));
-        dispatch({
-            type: AUTH_ERROR
+    if(getState().auth.token){
+        axios.get('/auth/signed', tokenStatus(getState)).then(res => dispatch({
+            type: USER_LOADED,
+            payload: res.data
+        })).catch((err) => {
+            dispatch(getErrors(err.response.data.message, err.response.status));
+            dispatch({
+                type: AUTH_ERROR
+            });
         });
-    });
+    }
 }
 
 export const tokenStatus = getState => {
@@ -27,9 +27,7 @@ export const tokenStatus = getState => {
             'Content-type': 'application/json'
         }
     }
-    if(token){
-        options.headers['x-auth-token'] = token
-    }
+    options.headers['x-auth-token'] = token
     
     return options;
 }
@@ -39,7 +37,7 @@ export const loginUser = (userData) => dispatch => {
         type: LOGIN_SUCCESS,
         payload: res.data
     })).catch((err) => {
-        dispatch(getErrors(err.response.data.message, err.response.status));
+        dispatch(getErrors(err.response.data.message, err.response.status, 'LOGIN_FAIL'));
         dispatch({
             type: LOGIN_FAIL
         });
@@ -53,7 +51,7 @@ export const registerUser = (newUser) => dispatch => {
             payload: res.data
         })
     }).catch((err) => {
-        dispatch(getErrors(err.response.data.message, err.response.status));
+        dispatch(getErrors(err.response.data.message, err.response.status, 'REGISTER_FAIL'));
         dispatch({
             type: REGISTER_FAIL
         })
