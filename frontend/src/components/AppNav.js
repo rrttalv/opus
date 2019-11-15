@@ -5,13 +5,7 @@ import { Collapse,
     NavbarToggler,
     NavbarBrand,
     Nav,
-    NavLink,
-    NavItem,
-    Button,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem } from 'reactstrap';
+    NavItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
@@ -30,8 +24,18 @@ class AppNav extends Component {
         });
     }
 
-    render() {
+    userAuthenticated(){
+        return this.props.auth;
+    }
 
+    render() {
+        const authLinks = (
+            <Fragment>
+                <NavItem href="#">
+                    <LoginModal></LoginModal>
+                </NavItem>
+            </Fragment>
+        )
         const unauthLinks = (
             <Fragment>
                 <NavItem href="#" style={{marginRight: '0.5rem'}}>
@@ -49,7 +53,7 @@ class AppNav extends Component {
             <NavbarToggler onClick={this.toggle}></NavbarToggler>
             <Collapse isOpen={this.state.visible} navbar>
                 <Nav className="ml-auto" navbar>
-                    {unauthLinks}
+                    {this.userAuthenticated() ? authLinks : unauthLinks}
                 </Nav>
             </Collapse>
         </Navbar>
@@ -58,4 +62,8 @@ class AppNav extends Component {
     }
 }
 
-export default AppNav;
+const mapStateToProps = state => ({
+    auth: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, {AppNav})(AppNav);

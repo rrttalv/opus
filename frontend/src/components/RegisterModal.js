@@ -88,6 +88,7 @@ class RegisterModal extends Component {
                 type: "password"
             }
         ]
+        
         return (
             <div>
                 <NavLink onClick={this.toggle}>Register</NavLink>

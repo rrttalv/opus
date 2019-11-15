@@ -12,7 +12,7 @@ export const getLoginStatus = () => (dispatch, getState) => {
             type: USER_LOADED,
             payload: res.data
         })).catch((err) => {
-            dispatch(getErrors(err.response.data.message, err.response.status));
+            dispatch(getErrors(err.response.data.message, err.response.status, 'AUTH_ERROR'));
             dispatch({
                 type: AUTH_ERROR
             });

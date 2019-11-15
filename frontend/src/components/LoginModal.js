@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalFooter, ModalBody, NavLink, FormGroup,
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authActions'
 import ErrorDisplay from './ErrorDisplay';
+import { clearAllErrors } from '../actions/errorActions';
 class LoginModal extends Component {
 
     componentDidUpdate(errorState) {
@@ -34,6 +35,7 @@ class LoginModal extends Component {
     }
 
     toggle = () => {
+        this.props.clearAllErrors();
         this.setState({
             modalOpen: !this.state.modalOpen
         });
@@ -103,4 +105,4 @@ const mapStateToProps = state => ({
     error: state.error
 })
 
-export default connect(mapStateToProps, {loginUser})(LoginModal)
+export default connect(mapStateToProps, {loginUser, clearAllErrors})(LoginModal)
