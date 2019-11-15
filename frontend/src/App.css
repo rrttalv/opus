@@ -12,3 +12,11 @@ a {
   text-decoration: none;
   color: #fff!important;
 }
+
+.center{
+  text-align: center;
+}
+
+.margin-top{
+  margin-top: 1rem;
+}

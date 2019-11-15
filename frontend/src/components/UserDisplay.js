@@ -3,6 +3,7 @@ import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getUsers, deleteUser } from '../actions/userActions';
 import { PropTypes } from 'prop-types';
+import Loading from './Loading';
 
 class UserDisplay extends Component {
     constructor(props){
@@ -20,10 +21,10 @@ class UserDisplay extends Component {
     render() {
         const { users, loading } = this.props.users.user;
         return (
-            <Container>
+            <Container className="margin-top">
                 <ListGroup>{ 
-                !loading ? users.map((element, i) => (<ListGroupItem key={i}><h3>{element.email}</h3></ListGroupItem>)) 
-                : <div><p>Loading</p></div>
+                !loading ? users.map((element, i) => (<ListGroupItem key={i}><h5>{element.email}</h5></ListGroupItem>)) 
+                : <Loading style={{}} />
                 }
                 </ListGroup>
             </Container>
