@@ -8,3 +8,9 @@ export const displayUserModal = userInfo => dispatch => {
         modalProps: userInfo
     })
 };
+
+export const hideModal = () => dispatch => {
+    dispatch({
+        type: HIDE_MODAL
+    })
+}

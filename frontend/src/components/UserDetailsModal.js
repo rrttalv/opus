@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
 
-export default class UserDetailsModal extends Component {
+class UserDetailsModal extends Component {
     render() {
         return (
             <div>
@@ -11,3 +11,5 @@ export default class UserDetailsModal extends Component {
         )
     }
 }
+
+export default UserDetailsModal;

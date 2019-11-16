@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import UserDetailsModal from './UserDetailsModal';
 import { Modal } from 'reactstrap';
 import { connect } from 'react-redux';
+import { hideModal } from '../actions/modalActions';
 
 class RootModal extends Component {
     
@@ -10,7 +11,10 @@ class RootModal extends Component {
         this.state = {
             modalOpen: props.modal.open
         }
-        //this.closeModal = this.closeModal.bind(this);
+    }
+
+    closeModal = () => {
+        this.props.hideModal();
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -24,10 +28,11 @@ class RootModal extends Component {
     }
 
     render() {
+        console.log(this.props)
         if(this.props.modal.modalType){
             const SelectedModal = this.modals[this.props.modal.modalType];
             return (
-                <Modal isOpen={this.props.modal.open}>
+                <Modal isOpen={this.props.modal.open} toggle={this.closeModal}>
                     <SelectedModal></SelectedModal>
                 </Modal>
             )
@@ -45,4 +50,4 @@ const mapStateToProps = state => ({
     modal: state.modal
 })
 
-export default connect(mapStateToProps, null)(RootModal)
+export default connect(mapStateToProps, { hideModal })(RootModal)
