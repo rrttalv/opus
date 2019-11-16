@@ -11,3 +11,5 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const REGISTER_LOADING = 'REGISTER_LOADING';
 export const USER_LOADED = 'USER_LOADED';
 export const USER_LOADING = 'USER_LOADING';
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';

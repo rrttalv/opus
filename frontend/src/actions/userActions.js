@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USERS, DELETE_USER, LOADING_USERS } from './constants';
+import { GET_USERS, DELETE_USER, LOADING_USERS, SHOW_MODAL } from './constants';
 import { tokenStatus } from './authActions';
 
 export const getUsers = (page) => (dispatch, getState) => {
