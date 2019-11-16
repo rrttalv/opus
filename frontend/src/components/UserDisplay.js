@@ -17,20 +17,13 @@ class UserDisplay extends Component {
         this.props.deleteUser(id)
     }
 
-    renderModal = (user) => {
+    showUserModal = (user) => {
         this.props.displayUserModal(user)
     }
 
-    /*
-    const displayUserDetails = id => {
-        var matchingUser = users.filter(user => user._id === id)[0];
-        this.setState({currentUser: matchingUser, showModal: true})
-        onClick={() => displayUserDetails(element._id)}
-    }
-    */
-
     render() {
         const { users, loading } = this.props.users.user;
+        const { open } = this.props.modal;
         const buttons = (
             <Fragment>
                 <ReusableButton text={'Delete'} />
@@ -40,11 +33,12 @@ class UserDisplay extends Component {
             <Container className="margin-top">
                 <ListGroup>{ 
                 !loading ? users.map((element, i) => 
-                (<ListGroupItem onClick={() => this.renderModal(element)} style={{display: 'flex', justifyContent: 'space-between'}} key={i}>
+                (<ListGroupItem onClick={() => this.showUserModal(element)} style={{display: 'flex', justifyContent: 'space-between'}} key={i}>
                     <h5 style={{width: '65%'}}>{element.email}</h5>{buttons}</ListGroupItem>)) 
                 : <Loading />
                 }
                 </ListGroup>
+                { open ? <RootModal /> : null }
             </Container>
         )
 
@@ -59,6 +53,7 @@ UserDisplay.propTypes = {
 
 const mapStateToProps = (state) => ({
     users: state,
+    modal: state.modal
 });
 
 export default connect(mapStateToProps, { getUsers, deleteUser, displayUserModal })(UserDisplay);
