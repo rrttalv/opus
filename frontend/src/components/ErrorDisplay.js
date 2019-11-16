@@ -13,7 +13,12 @@ class ErrorDisplay extends Component {
 
 
     shouldComponentUpdate(nextProps){
-        return this.props.error === nextProps.error
+        if(this.props.message === nextProps.message){
+            return false
+        }else{
+            this.setState({error: nextProps.error, message: nextProps.message})
+            return true
+        }
     }
 
     render() {

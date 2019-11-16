@@ -23,7 +23,7 @@ class RegisterModal extends Component {
     componentDidUpdate(errorState) {
         if(this.props.error !== errorState.error){
             if(this.props.error.id === 'REGISTER_FAIL'){
-                this.setState({error: true, errorMessage: this.props.error.message});
+                this.setState({error: true, errorMessage: this.props.error.message})
             }else{
                 this.setState({error: false, errorMessage: ''})
             }
@@ -89,7 +89,6 @@ class RegisterModal extends Component {
                 type: "password"
             }
         ]
-        
         return (
             <div>
                 <NavLink onClick={this.toggle}>Register</NavLink>
