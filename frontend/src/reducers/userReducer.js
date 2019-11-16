@@ -2,7 +2,8 @@ import { GET_USERS, DELETE_USER, LOADING_USERS } from '../actions/constants';
 
 const initState = { 
     users: [{}],
-    loading: true
+    loading: true,
+    page: 0
 }
 
 export default (state = initState, action) => {

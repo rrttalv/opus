@@ -9,6 +9,7 @@ import { Collapse,
 import { connect } from 'react-redux';
 import RegisterModal from './modals/RegisterModal';
 import LoginModal from './modals/LoginModal';
+import Logout from './Logout';
 
 class AppNav extends Component {
     constructor(props){
@@ -32,7 +33,7 @@ class AppNav extends Component {
         const authLinks = (
             <Fragment>
                 <NavItem href="#">
-                    <LoginModal></LoginModal>
+                    <Logout></Logout>
                 </NavItem>
             </Fragment>
         )

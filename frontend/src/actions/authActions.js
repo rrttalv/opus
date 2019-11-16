@@ -1,7 +1,7 @@
 import { REGISTER_FAIL, USER_LOADING,
         REGISTER_LOADING, REGISTER_SUCCESS,
         LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR,
-        USER_LOADED} from './constants';
+        USER_LOADED, LOGOUT} from './constants';
 import axios from 'axios'
 import { getErrors } from './errorActions';
 import { history } from '../index';
@@ -19,6 +19,12 @@ export const getLoginStatus = () => (dispatch, getState) => {
             });
         });
     }
+}
+
+export const logout = () => (dispatch) => {
+    dispatch({
+        type: LOGOUT
+    })
 }
 
 export const tokenStatus = getState => {
