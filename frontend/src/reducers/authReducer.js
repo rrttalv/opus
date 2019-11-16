@@ -1,11 +1,11 @@
 import { REGISTER_FAIL, REGISTER_SUCCESS, 
         LOGIN_SUCCESS, USER_LOADING, 
         USER_LOADED, REGISTER_LOADING, 
-        LOGIN_FAIL, AUTH_ERROR, LOGOUT } from '../actions/constants';
+        LOGIN_FAIL, AUTH_ERROR, LOGOUT, STOP_LOADING } from '../actions/constants';
 
 const initState = {
     token: localStorage.getItem('id_token'),
-    isAuthenticated: null,
+    isAuthenticated: false,
     isLoading: false,
     user: null
 };
@@ -21,7 +21,7 @@ export default (state = initState, action) => {
             return{
                 ...state,
                 isAuthenticated: true,
-                isLoading: true,
+                isLoading: false,
                 user: action.payload
             }
         case REGISTER_LOADING:
@@ -46,7 +46,8 @@ export default (state = initState, action) => {
         case REGISTER_SUCCESS:
         case LOGIN_FAIL:
         case REGISTER_FAIL:
-        case AUTH_ERROR: {
+        case AUTH_ERROR:
+        case STOP_LOADING: {
             localStorage.clear();
             return{
                 ...state,

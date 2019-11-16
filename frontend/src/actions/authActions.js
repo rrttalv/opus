@@ -1,13 +1,16 @@
 import { REGISTER_FAIL, USER_LOADING,
         REGISTER_LOADING, REGISTER_SUCCESS,
         LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR,
-        USER_LOADED, LOGOUT} from './constants';
+        USER_LOADED, LOGOUT, STOP_LOADING } from './constants';
 import axios from 'axios'
 import { getErrors } from './errorActions';
 import { history } from '../index';
 
 export const getLoginStatus = () => (dispatch, getState) => {
     // Set state to user loading
+    dispatch({
+        type: USER_LOADING
+    })
     if(getState().auth.token){
         axios.get('/auth/signed', tokenStatus(getState)).then(res => dispatch({
             type: USER_LOADED,
@@ -18,6 +21,10 @@ export const getLoginStatus = () => (dispatch, getState) => {
                 type: AUTH_ERROR
             });
         });
+    }else{
+        dispatch({
+            type: STOP_LOADING
+        })
     }
 }
 
@@ -41,11 +48,11 @@ export const tokenStatus = getState => {
 
 export const loginUser = (userData) => dispatch => {
     axios.post('/auth/login', userData).then(res => {
-        history.push('/dashboard')
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         })
+        history.push('/dashboard')
     }).catch((err) => {
         dispatch(getErrors(err.response.data.message, err.response.status, 'LOGIN_FAIL'));
         dispatch({

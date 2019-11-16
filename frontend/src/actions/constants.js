@@ -14,3 +14,4 @@ export const USER_LOADING = 'USER_LOADING';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
 export const LOGOUT = 'LOGOUT';
+export const STOP_LOADING = 'STOP_LOADING';

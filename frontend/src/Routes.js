@@ -7,23 +7,28 @@ import Dashboard from '../src/components/Dashboard';
 
 class Routes extends Component {
     render() {
-        if(this.props.auth !== null){
-            const { auth } = this.props;
+        const { auth, loading } = this.props;
+        if(!loading){
             return (
                 <div>
                     <Route exact path="/" component={Home} />
                     <LoggedInRoute exact authenticated = {() => auth} path="/dashboard" component={Dashboard} />
                 </div>
             )
+        }else{
+            return (
+            <div></div>
+            )
         }
-        return <div></div>
+
 
     }
 }
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth.isAuthenticated
+        auth: state.auth.isAuthenticated,
+        loading: state.auth.isLoading
     }
 }
 
