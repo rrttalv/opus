@@ -5,7 +5,6 @@ import { getUsers, deleteUser } from '../actions/userActions';
 import { displayUserModal, displayDeleteWarning } from '../actions/modalActions';
 import { PropTypes } from 'prop-types';
 import Loading from './Loading';
-import ReusableButton from './ReusableButton';
 import RootModal from './RootModal'
 class UserDisplay extends Component {
 

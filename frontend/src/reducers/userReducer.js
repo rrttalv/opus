@@ -16,7 +16,7 @@ export default (state = initState, action) => {
         case DELETE_USER:
             return {
                 ...state,
-                users: state.users.filter(user => user._id !== action.payload)
+                loading: false
             }
         case LOADING_USERS:
             return {

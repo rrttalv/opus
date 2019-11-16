@@ -24,17 +24,19 @@ router.get('/users/:page', authUser, (req, res, next) => {
 });
 
 //
-router.put('/users/delete/:id', authUser, (req, res, next) => {
+router.post('/users/delete/', authUser, (req, res, next) => {
     /*
     This route enables a user to delete a user account.
     */
     let id = req.body.id;
-    let page = req.body.page;
+    console.log(req.body)
+    /*
     deleteUser(id).then(() => {
         findAllUsers(25*page).then((userList) => {
             res.json(userList);
         }).catch(next);
     }).catch(next);
+    */
 });
 
 const findAllUsers = async (skip) => {

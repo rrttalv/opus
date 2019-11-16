@@ -14,11 +14,13 @@ export const getUsers = (page) => (dispatch, getState) => {
     })
 };
 
-export const deleteUser = (id) => (dispatch, getState) => {
-    axios.post(`/api/users/delete/${id}`, tokenStatus(getState)).then(res => dispatch({
+export const deleteUser = (toDelete) => (dispatch, getState) => {
+    axios.post(`/api/users/delete`, toDelete, tokenStatus(getState)).then(res => dispatch({
         type: DELETE_USER,
         payload: res.data
-    }))
+    })).catch((err) => {
+        console.log(err);
+    })
 };
 
 export const setLoading = () => {

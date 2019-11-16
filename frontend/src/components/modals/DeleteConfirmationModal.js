@@ -1,7 +1,16 @@
 import React, { Component } from 'react'
 import { ModalBody, ModalFooter, Row, Col, Button } from 'reactstrap';
+import { deleteUser } from '../../actions/userActions';
+import { connect } from 'react-redux';
 
-export default class DeleteConfirmationModal extends Component {
+class DeleteConfirmationModal extends Component {
+
+    handleUserDelete = () => {
+        const userToDelete = {
+            id: this.props.data._id
+        }
+        this.props.deleteUser(userToDelete)
+    }
 
     render() {
         const { toggle } = this.props;
@@ -12,10 +21,16 @@ export default class DeleteConfirmationModal extends Component {
                     <h5>{`Do you want to delete ${data.firstName} ${data.lastName}?`}</h5>
                 </ModalBody>
                 <ModalFooter>
-                    <Button size="md" color="danger">{`Delete`}</Button>
+                    <Button onClick={this.handleUserDelete} size="md" color="danger">{`Delete`}</Button>
                     <Button onClick={toggle} color="info" size="md">{`Cancel`}</Button>
                 </ModalFooter>
             </div>
         )
     }
 }
+
+const matchStateToProps = state => ({
+    user: state.user
+})
+
+export default connect(matchStateToProps, {deleteUser})(DeleteConfirmationModal);
