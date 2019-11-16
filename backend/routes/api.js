@@ -29,14 +29,12 @@ router.post('/users/delete/', authUser, (req, res, next) => {
     This route enables a user to delete a user account.
     */
     let id = req.body.id;
-    console.log(req.body)
-    /*
+    let page = req.body.page;
     deleteUser(id).then(() => {
         findAllUsers(25*page).then((userList) => {
             res.json(userList);
         }).catch(next);
     }).catch(next);
-    */
 });
 
 const findAllUsers = async (skip) => {

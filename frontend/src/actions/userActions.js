@@ -15,6 +15,9 @@ export const getUsers = (page) => (dispatch, getState) => {
 };
 
 export const deleteUser = (toDelete) => (dispatch, getState) => {
+    dispatch({
+        type: LOADING_USERS
+    })
     axios.post(`/api/users/delete`, toDelete, tokenStatus(getState)).then(res => dispatch({
         type: DELETE_USER,
         payload: res.data

@@ -8,8 +8,15 @@ import Loading from './Loading';
 import RootModal from './RootModal'
 class UserDisplay extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {
+            pageNumber: 0
+        }
+    }
+
     componentDidMount = () => {
-        this.props.getUsers(0);
+        this.props.getUsers(this.state.pageNumber);
     }
     
     clickDelete = (id) => {

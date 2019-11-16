@@ -3,13 +3,20 @@ import { ModalBody, ModalFooter, Row, Col, Button } from 'reactstrap';
 import { deleteUser } from '../../actions/userActions';
 import { connect } from 'react-redux';
 
-class DeleteConfirmationModal extends Component {
+class DeleteConfirmationModal extends Component {    
 
     handleUserDelete = () => {
-        const userToDelete = {
-            id: this.props.data._id
+        const deletionData = {
+            id: this.props.data._id,
+            page: 0
         }
-        this.props.deleteUser(userToDelete)
+        this.props.deleteUser(deletionData);
+    }
+
+    componentDidUpdate = (usersList) => {
+        if(this.props.user !== usersList){
+            this.props.toggle()
+        }
     }
 
     render() {
