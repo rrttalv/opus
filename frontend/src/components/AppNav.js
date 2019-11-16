@@ -7,8 +7,8 @@ import { Collapse,
     Nav,
     NavItem } from 'reactstrap';
 import { connect } from 'react-redux';
-import RegisterModal from './RegisterModal';
-import LoginModal from './LoginModal';
+import RegisterModal from './modals/RegisterModal';
+import LoginModal from './modals/LoginModal';
 
 class AppNav extends Component {
     constructor(props){

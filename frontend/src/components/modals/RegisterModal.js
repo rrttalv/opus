@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, FormGroup, Form, Label, Input, NavLink } from 'reactstrap';
 import { connect } from 'react-redux';
-import { registerUser } from '../actions/authActions';
-import ErrorDisplay from './ErrorDisplay';
-import { clearAllErrors } from '../actions/errorActions';
+import { registerUser } from '../../actions/authActions';
+import ErrorDisplay from '../ErrorDisplay';
+import { clearAllErrors } from '../../actions/errorActions';
 import { PropTypes } from 'prop-types';
 class RegisterModal extends Component {
     constructor(props){

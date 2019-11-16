@@ -19,7 +19,7 @@ router.get('/users/:page', authUser, (req, res, next) => {
     let limit = 25;
     let page = req.params.page || 0;
     findAllUsers(limit*page).then((userList) => {
-        res.json(userList)
+        res.json(userList);
     }).catch(next);
 });
 
@@ -28,11 +28,21 @@ router.put('/users/delete/:id', authUser, (req, res, next) => {
     /*
     This route enables a user to delete a user account.
     */
-    
+    let id = req.body.id;
+    let page = req.body.page;
+    deleteUser(id).then(() => {
+        findAllUsers(25*page).then((userList) => {
+            res.json(userList);
+        }).catch(next);
+    }).catch(next);
 });
 
 const findAllUsers = async (skip) => {
     return await User.find({}).select('-password -confirm_token').skip(skip);
+}
+
+const deleteUser = async (id) => {
+    return await User.deleteOne({_id: id});
 }
 
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalFooter, ModalBody, NavLink, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-import { loginUser } from '../actions/authActions'
-import ErrorDisplay from './ErrorDisplay';
-import { clearAllErrors } from '../actions/errorActions';
+import { loginUser } from '../../actions/authActions'
+import ErrorDisplay from '../ErrorDisplay';
+import { clearAllErrors } from '../../actions/errorActions';
 import { PropTypes } from 'prop-types';
 
 class LoginModal extends Component {

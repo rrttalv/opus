@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import UserDetailsModal from './UserDetailsModal';
+import UserDetailsModal from './modals/UserDetailsModal';
+import DeleteConfirmationModal from './modals/DeleteConfirmationModal'
 import { Modal } from 'reactstrap';
 import { connect } from 'react-redux';
 import { hideModal } from '../actions/modalActions';
@@ -24,7 +25,8 @@ class RootModal extends Component {
     }
 
     modals = {
-        'USER_MODAL': UserDetailsModal
+        'USER_MODAL': UserDetailsModal,
+        'DELETE_MODAL': DeleteConfirmationModal
     }
 
     render() {

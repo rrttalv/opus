@@ -9,6 +9,15 @@ export const displayUserModal = userInfo => dispatch => {
     })
 };
 
+export const displayDeleteWarning = info => dispatch => {
+    dispatch({
+        type: SHOW_MODAL,
+        modalProps: info,
+        isOpen: true,
+        modalType: 'DELETE_MODAL'
+    })
+}
+
 export const hideModal = () => dispatch => {
     dispatch({
         type: HIDE_MODAL
