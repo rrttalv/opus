@@ -62,7 +62,7 @@ export const loginUser = (userData) => dispatch => {
 }
 
 export const registerUser = (newUser) => dispatch => {
-    axios.post('/auth/register', newUser).then((res) => {
+    axios.post('/auth/register', newUser).then(res => {
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data

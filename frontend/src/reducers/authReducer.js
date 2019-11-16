@@ -7,6 +7,7 @@ const initState = {
     token: localStorage.getItem('id_token'),
     isAuthenticated: false,
     isLoading: false,
+    hasRegistered: false,
     user: null
 };
 
@@ -44,6 +45,13 @@ export default (state = initState, action) => {
                 isLoading: false
             }
         case REGISTER_SUCCESS:
+            console.log(state)
+            return{
+                ...state,
+                hasRegistered: true,
+                user: null,
+                token: null
+            }
         case LOGIN_FAIL:
         case REGISTER_FAIL:
         case AUTH_ERROR:

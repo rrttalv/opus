@@ -16,21 +16,21 @@ class RegisterModal extends Component {
             firstName: '',
             lastName: '',
             error: false,
+            hasRegistered: false,
             errorMessage: ''
         }
     }
 
-    componentDidUpdate(errorState) {
-        if(this.props.error !== errorState.error){
+    componentDidUpdate(compState) {
+        if(this.props.error !== compState.error){
             if(this.props.error.id === 'REGISTER_FAIL'){
                 this.setState({error: true, errorMessage: this.props.error.message})
             }else{
                 this.setState({error: false, errorMessage: ''})
             }
         }
-
         if(this.state.modalOpen){
-            if(this.props.isAuth){
+            if(this.props.hasReg){
                 this.toggle();
             }
         }
@@ -125,12 +125,12 @@ class RegisterModal extends Component {
 RegisterModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
-    isAuth: PropTypes.bool,
+    hasReg: PropTypes.bool,
     error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuthenticated,
+    hasReg: state.auth.hasRegistered,
     error: state.error
 })
 
