@@ -90,23 +90,39 @@ router.post('/login',
         let message = errors.array()[0].msg;
         res.status(400).json({message: message});
     }else{
-        trimAndSanitize(req.body).then((body) =>{
+        trimAndSanitize(req.body).then((body) => {
             findByEmail(body.email).then((user) => {
-                //ADD A CONFIRMED EMAIL CHECK
-                const id_token = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
-                res.json({token: id_token, user: user})
+                //if(!user.confirm_token){
+                    addLoginLog(user.id).then(() => {
+                        const id_token = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
+                        res.json({token: id_token, user: user})
+                    }).catch(next);
+                /*}else{
+                    res.status(400).json({message: "Please confirm your email address"})
+                }*/
             }).catch(next);
         }).catch(next);
     }
 })
 
 router.get('/signed', authUser, (req, res, next) => {
+    /*
+        Validates the JWT token
+    */
     findByEmail(req.user.email).then((user) => {
         if(user){
             res.json(user);
         }
     }).catch(next);
 })
+
+const addLoginLog = async (id) => {
+    /*
+        Push a date into the user login log array. 
+    */
+    let currentDate = new Date().toISOString()
+    return await User.updateOne({_id: id}, {$push: {'login_count': currentDate}});
+}
 
 const findByEmail = async (emailAddress) => {
     /*
