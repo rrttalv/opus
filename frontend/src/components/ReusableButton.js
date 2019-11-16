@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 export default class ReusableButton extends Component {
     render() {
         return (
-        <Button>{ this.props.text }</Button>
+            <Button color={this.props.color}>{ this.props.text }</Button>
         )
     }
 }

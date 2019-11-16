@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { Container, ListGroup, ListGroupItem, Modal, ModalBody, ModalHeader, Row, Col } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Button, Modal, ModalBody, ModalHeader, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getUsers, deleteUser } from '../actions/userActions';
-import { displayUserModal } from '../actions/modalActions';
+import { displayUserModal, displayDeleteWarning } from '../actions/modalActions';
 import { PropTypes } from 'prop-types';
 import Loading from './Loading';
 import ReusableButton from './ReusableButton';
@@ -21,20 +21,24 @@ class UserDisplay extends Component {
         this.props.displayUserModal(user)
     }
 
+    displayDeletePrompt = (user) => {
+        this.props.displayDeleteWarning(user)
+    }
+
     render() {
         const { users, loading } = this.props.users.user;
         const { open } = this.props.modal;
-        const buttons = (
-            <Fragment>
-                <ReusableButton text={'Delete'} />
-            </Fragment>
-        )
+        const listGroupStyle = {display: 'flex', justifyContent: 'space-between'};
+        const buttonStyle = {flex: '1', maxWidth: '10%', marginRight: '5px'};
         return (
             <Container className="margin-top">
                 <ListGroup>{ 
                 !loading ? users.map((element, i) => 
-                (<ListGroupItem onClick={() => this.showUserModal(element)} style={{display: 'flex', justifyContent: 'space-between'}} key={i}>
-                    <h5 style={{width: '65%'}}>{element.email}</h5>{buttons}</ListGroupItem>)) 
+                (<ListGroupItem style={listGroupStyle} key={i}>
+                    <h5 style={{width: '50%'}}>{element.email}</h5>
+                    <Button color="info" style={buttonStyle} onClick={() => this.showUserModal(element)}>{'View'}</Button>
+                    <Button color="danger" style={buttonStyle} onClick={() => this.displayDeletePrompt(element)}>{'Delete'}</Button>
+                </ListGroupItem>)) 
                 : <Loading />
                 }
                 </ListGroup>
@@ -56,4 +60,4 @@ const mapStateToProps = (state) => ({
     modal: state.modal
 });
 
-export default connect(mapStateToProps, { getUsers, deleteUser, displayUserModal })(UserDisplay);
+export default connect(mapStateToProps, { getUsers, deleteUser, displayUserModal, displayDeleteWarning })(UserDisplay);
