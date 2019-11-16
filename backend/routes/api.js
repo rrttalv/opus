@@ -32,7 +32,7 @@ router.put('/users/delete/:id', authUser, (req, res, next) => {
 });
 
 const findAllUsers = async (skip) => {
-    return await User.find().skip(skip);
+    return await User.find({}).select('-password -confirm_token').skip(skip);
 }
 
 

@@ -8,6 +8,7 @@ const initState = {
 export default (state = initState, action) => {
     switch(action.type){
         case SHOW_MODAL:
+            console.log(action)
             return {
                 modalType: action.modalType,
                 modalProps: action.modalProps
