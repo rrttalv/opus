@@ -10,7 +10,7 @@ export default (state = initState, action) => {
         case GET_USERS:
             return {
                 ...state,
-                users: action.payload.userList,
+                users: action.payload,
                 loading: false
             }
         case DELETE_USER:
