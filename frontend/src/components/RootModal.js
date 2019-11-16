@@ -28,12 +28,11 @@ class RootModal extends Component {
     }
 
     render() {
-        console.log(this.props)
         if(this.props.modal.modalType){
             const SelectedModal = this.modals[this.props.modal.modalType];
             return (
                 <Modal isOpen={this.props.modal.open} toggle={this.closeModal}>
-                    <SelectedModal></SelectedModal>
+                    <SelectedModal toggle={this.closeModal} data={this.props.modal.modalProps}></SelectedModal>
                 </Modal>
             )
         }else{

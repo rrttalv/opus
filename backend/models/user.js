@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
         }
     },
     login_count: {
-        type: Number
+        type: [{type: Date}]
     },
     signup: {
         type: Date,
