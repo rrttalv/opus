@@ -16,10 +16,10 @@ router.get('/:page', authUser, (req, res, next) => {
     This route returns all the registered users. Only accessible to authenticated users.
     Hardcoded limit per page is 25.
     */
-    let limit = 25;
+    let limit = 10;
     let page = req.params.page || 0;
-    findAllUsers(limit*page).then((userList) => {
-        res.json(userList);
+    findAllUsers(limit, limit*page).then((userData) => {
+        res.json({users: userData.inRange, hasMore: userData.hasMore});
     }).catch(next);
 });
 
@@ -30,15 +30,18 @@ router.post('/delete/', authUser, (req, res, next) => {
     */
     let id = req.body.id;
     let page = req.body.page;
+    let limit = 10;
     deleteUser(id).then(() => {
-        findAllUsers(25*page).then((userList) => {
-            res.json(userList);
+        findAllUsers(limit, limit*page).then((userData) => {
+            res.json({users: userData.inRange, hasMore: userData.hasMore});
         }).catch(next);
     }).catch(next);
 });
 
-const findAllUsers = async (skip) => {
-    return await User.find({}).select('-password -confirm_token').skip(skip);
+const findAllUsers = async (limit, skip) => {
+    let userLen = await User.countDocuments({});
+    let usersInRange = await User.find({}).select('-password -confirm_token').limit(limit).skip(skip);
+    return Object.assign({}, {inRange: usersInRange, hasMore: userLen > limit*skip});
 }
 
 const deleteUser = async (id) => {
