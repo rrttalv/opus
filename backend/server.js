@@ -11,8 +11,7 @@ const port = 4000 || process.env.PORT;
 const app = express();
 
 mongoose.connect('mongodb://admin:a55dm1n00@ds057847.mlab.com:57847/opus', { useNewUrlParser: true });
-app.set("views", path.join(__dirname, "views"));
-
+app.set("emails", path.join(__dirname, "emails"));
 app.use(bodyParser.json());
 app.use(cors());
 app.set("view engine", "ejs");

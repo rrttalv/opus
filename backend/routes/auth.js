@@ -7,7 +7,7 @@ import config from 'config';
 import jsonwebtoken from 'jsonwebtoken';
 import { trimAndSanitize } from '../other/sanitize';
 import { authUser } from '../other/middleware';
-
+import { sendVerifyEmail, renderVerifyEmail } from '../other/sendEmail';
 /*
     All unauthenticated routes live in this file.
 */
@@ -52,13 +52,19 @@ router.post('/register',
                 //Hash password
                 hashUserPassword(newUser).then((hashedUser) => {
                     saveNewUser(hashedUser).then((savedUser) => {
-                        //SEND EMAIL TO USER AT SOME POINT
-                        res.json(savedUser)
+                        /* 
+                            Send email to user. Can only send free emails to domains with verified sender signature. 
+                            Currently verified: pohi.io
+                        */
+                        renderVerifyEmail('asd', `http://localhost:3000/verify/${'asd'}`).then((template) => {
+                            sendVerifyEmail(template, 'ricotalvar@pohi.io').then(() => {
+                                res.json(savedUser)
+                            }).catch(next);
+                        }).catch(next); 
                     }).catch(next);
                 }).catch(next);
             }).catch(next);
         }).catch(next);
-
     }
 })
 
