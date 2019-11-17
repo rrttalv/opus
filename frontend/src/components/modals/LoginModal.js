@@ -5,6 +5,7 @@ import { loginUser } from '../../actions/authActions'
 import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
 import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom'
 
 class LoginModal extends Component {
     componentDidUpdate(errorState) {
@@ -92,7 +93,8 @@ class LoginModal extends Component {
                         ))}
                     </Form>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter style={{justifyContent: 'space-between'}}>
+                    <Link onClick={this.toggle} style={{color: `#454545`}} to="/forgot">Forgot Password</Link>
                     <Button type="submit" size="md" onClick={this.handleSubmit}>Login</Button>
                 </ModalFooter>
             </Modal>

@@ -10,13 +10,20 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.nav-link, .navbar-brand{
   color: #fff!important;
+}
+
+.nav-link:hover{
+  cursor: pointer;
 }
 
 a, .btn:focus {
   outline: none !important;
-  outline-offset: none !important;
   box-shadow: none !important;
+  text-decoration: none;
 }
 
 .center{

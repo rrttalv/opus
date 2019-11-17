@@ -1,7 +1,7 @@
-import { REGISTER_FAIL, USER_LOADING,
-        REGISTER_LOADING, REGISTER_SUCCESS,
+import { REGISTER_FAIL, USER_LOADING, REGISTER_SUCCESS,
         LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR,
-        USER_LOADED, LOGOUT, STOP_LOADING } from './constants';
+        USER_LOADED, LOGOUT, STOP_LOADING,
+        UPDATE_PASSWORD, VERIFY_EMAIL, RESET_PASSWORD } from './constants';
 import axios from 'axios'
 import { getErrors } from './errorActions';
 import { history } from '../index';
