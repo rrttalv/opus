@@ -3,7 +3,8 @@ import { REGISTER_FAIL, REGISTER_SUCCESS,
         USER_LOADED, LOGIN_FAIL, 
         AUTH_ERROR, LOGOUT, 
         STOP_LOADING, VERIFY_EMAIL, 
-        RESET_PASSWORD, UPDATE_PASSWORD } from '../actions/constants';
+        RESET_PASSWORD, UPDATE_PASSWORD,
+        RESET_ERROR, VERIFY_ERROR } from '../actions/constants';
 
 const initState = {
     token: localStorage.getItem('id_token'),
@@ -53,6 +54,8 @@ export default (state = initState, action) => {
         case REGISTER_FAIL:
         case AUTH_ERROR:
         case STOP_LOADING:
+        case RESET_ERROR:
+        case VERIFY_ERROR:
         case VERIFY_EMAIL:
         case RESET_PASSWORD:
         case UPDATE_PASSWORD: {

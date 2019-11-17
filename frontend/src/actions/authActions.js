@@ -1,7 +1,8 @@
 import { REGISTER_FAIL, USER_LOADING, REGISTER_SUCCESS,
         LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR,
         USER_LOADED, LOGOUT, STOP_LOADING,
-        UPDATE_PASSWORD, VERIFY_EMAIL, RESET_PASSWORD } from './constants';
+        UPDATE_PASSWORD, VERIFY_EMAIL, RESET_PASSWORD,
+        VERIFY_ERROR, RESET_ERROR } from './constants';
 import axios from 'axios'
 import { getErrors } from './errorActions';
 import { history } from '../index';
@@ -26,6 +27,18 @@ export const getLoginStatus = () => (dispatch, getState) => {
             type: STOP_LOADING
         })
     }
+}
+
+export const verifyEmailAddress = emailToken => (dispatch) => {
+    axios.put(`/auth/verify/${emailToken}`).then(res => dispatch({
+        type: VERIFY_EMAIL,
+        payload: res.data
+    })).catch((err) => {
+        dispatch(getErrors(err.response.data.message, err.response.status, 'VERIFY_ERROR'));
+        dispatch({
+            type: VERIFY_ERROR
+        })
+    })
 }
 
 export const logout = () => (dispatch) => {

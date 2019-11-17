@@ -16,4 +16,6 @@ export const LOGOUT = 'LOGOUT';
 export const VERIFY_EMAIL = 'VERIFY_EMAIL';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
+export const VERIFY_ERROR = 'VERIFY_ERROR';
+export const RESET_ERROR = 'RESET_ERROR';
 export const STOP_LOADING = 'STOP_LOADING';

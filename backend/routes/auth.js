@@ -56,7 +56,7 @@ router.post('/register',
                             Send email to user. Can only send free emails to domains with verified sender signature. 
                             Currently verified: pohi.io
                         */
-                        renderVerifyEmail('asd', `http://localhost:3000/verify/${'asd'}`).then((template) => {
+                        renderVerifyEmail('asd', `http://localhost:3000/verify`).then((template) => {
                             sendVerifyEmail(template, 'ricotalvar@pohi.io').then(() => {
                                 res.json(savedUser)
                             }).catch(next);
