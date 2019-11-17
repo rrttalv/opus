@@ -13,6 +13,12 @@ a {
   color: #fff!important;
 }
 
+a, .btn:focus {
+  outline: none !important;
+  outline-offset: none !important;
+  box-shadow: none !important;
+}
+
 .center{
   text-align: center;
 }

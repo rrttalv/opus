@@ -22,16 +22,20 @@ class UserPagination extends Component {
     }
 
     render() {
-        
-
+        const paginationLinkStyle = {color: '#03A9F4'};
+        const paginationContainerStyle = {display: 'flex', justifyContent: 'center'}
         return (
             <div>
-                <Pagination>
+                <Pagination style={paginationContainerStyle}>
                     <PaginationItem>
-                        <PaginationLink previous onClick={this.loadPreviousPage} href="#">Previous</PaginationLink>
+                        <PaginationLink previous onClick={this.loadPreviousPage} href="#">
+                            <span style={paginationLinkStyle}>{`Previous`}</span>
+                        </PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
-                        <PaginationLink next onClick={this.loadNextPage} href="#">Next</PaginationLink>
+                        <PaginationLink next onClick={this.loadNextPage} href="#">
+                            <span style={paginationLinkStyle}>{`Next`}</span>
+                        </PaginationLink>
                     </PaginationItem>
                 </Pagination>
             </div>

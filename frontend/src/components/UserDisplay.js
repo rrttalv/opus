@@ -53,15 +53,13 @@ class UserDisplay extends Component {
                         <Col xs="3" lg="1">
                         <Button color="danger" style={buttonStyle} onClick={() => this.displayDeletePrompt(element)}>{'Delete'}</Button>
                         </Col>
-                        
-                        
                     </Row>
-                </ListGroupItem>)) 
+                </ListGroupItem>))
                 : <Loading />
                 }
                 </ListGroup>
                 { open ? <RootModal /> : null }
-                <UserPagination />
+                { !loading ? <UserPagination /> : null }
             </Container>
         )
 
