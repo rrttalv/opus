@@ -34,16 +34,26 @@ class UserDisplay extends Component {
     render() {
         const { users, loading } = this.props.users.user;
         const { open } = this.props.modal;
-        const listGroupStyle = {display: 'flex', justifyContent: 'space-between'};
-        const buttonStyle = {flex: '1', maxWidth: '10%', marginRight: '5px'};
+        const spanStyle = {fontWeight: '600', verticalAlign: 'sub', width: '75%', marginBottom: '0'};
+        const buttonStyle = {flex: '1', maxWidth: 'fit-content', marginRight: '5px'};
         return (
             <Container className="margin-top">
                 <ListGroup>{ 
                 !loading ? users.map((element, i) => 
-                (<ListGroupItem style={listGroupStyle} key={i}>
-                    <h5 style={{width: '50%'}}>{element.email}</h5>
-                    <Button color="info" style={buttonStyle} onClick={() => this.showUserModal(element)}>{'View'}</Button>
-                    <Button color="danger" style={buttonStyle} onClick={() => this.displayDeletePrompt(element)}>{'Delete'}</Button>
+                (<ListGroupItem className="margin-top" key={i}>
+                    <Row>
+                        <Col xs="6" lg="10">
+                        <span style={spanStyle}>{element.email}</span>
+                        </Col>
+                        <Col xs="3" lg="1">
+                        <Button color="info" style={buttonStyle} onClick={() => this.showUserModal(element)}>{'View'}</Button>
+                        </Col>
+                        <Col xs="3" lg="1">
+                        <Button color="danger" style={buttonStyle} onClick={() => this.displayDeletePrompt(element)}>{'Delete'}</Button>
+                        </Col>
+                        
+                        
+                    </Row>
                 </ListGroupItem>)) 
                 : <Loading />
                 }

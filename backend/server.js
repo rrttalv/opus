@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import ejs from 'ejs';
 import authRouter from './routes/auth';
-import apiRouter from './routes/api';
+import userRouter from './routes/users';
 
 const port = 4000 || process.env.PORT;
 const app = express();
@@ -18,7 +18,7 @@ app.use(cors());
 app.set("view engine", "ejs");
 
 app.use('/auth', authRouter);
-app.use('/api', apiRouter);
+app.use('/users', userRouter);
 
 app.use((err, req, res, next) => {
     //res.status(404).json({status: false, message: "Something went wrong!"});

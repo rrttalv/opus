@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
 })
 
-router.get('/users/:page', authUser, (req, res, next) => {
+router.get('/:page', authUser, (req, res, next) => {
     /*
     This route returns all the registered users. Only accessible to authenticated users.
     Hardcoded limit per page is 25.
@@ -24,7 +24,7 @@ router.get('/users/:page', authUser, (req, res, next) => {
 });
 
 //
-router.post('/users/delete/', authUser, (req, res, next) => {
+router.post('/delete/', authUser, (req, res, next) => {
     /*
     This route enables a user to delete a user account.
     */
