@@ -34,12 +34,12 @@ class UserDisplay extends Component {
     }
 
     render() {
-        const { users, loading } = this.props.users.user;
+        const { users, loading } = this.props.users;
         const { open } = this.props.modal;
         const spanStyle = {fontWeight: '600', verticalAlign: 'sub', width: '75%', marginBottom: '0'};
         const buttonStyle = {flex: '1', maxWidth: 'fit-content', marginRight: '5px'};
         return (
-            <Container className="margin-top">
+            <Container className="margin-top padding-bottom">
                 <ListGroup>{ 
                 !loading ? users.map((element, i) => 
                 (<ListGroupItem className="margin-top" key={i}>
@@ -61,6 +61,7 @@ class UserDisplay extends Component {
                 }
                 </ListGroup>
                 { open ? <RootModal /> : null }
+                <UserPagination />
             </Container>
         )
 
@@ -74,7 +75,7 @@ UserDisplay.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    users: state,
+    users: state.user,
     modal: state.modal
 });
 

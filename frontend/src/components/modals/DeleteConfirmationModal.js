@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 class DeleteConfirmationModal extends Component {    
 
     handleUserDelete = () => {
+        const { page } = this.props.user;
+        const { data } = this.props;
         const deletionData = {
-            id: this.props.data._id,
-            page: 0
+            id: data._id,
+            page: page
         }
         this.props.deleteUser(deletionData);
     }
