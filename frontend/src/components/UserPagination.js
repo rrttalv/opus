@@ -10,7 +10,14 @@ class UserPagination extends Component {
     loadPreviousPage = () => {
         const { page } = this.props.users;
         if(page > 0){
-            getUsers(page-1);
+            this.props.getUsers(parseInt(page)-1);
+        }
+    }
+
+    loadNextPage = () => {
+        const { hasMore, page } = this.props.users;
+        if(hasMore){
+            this.props.getUsers(parseInt(page)+1);
         }
     }
 
@@ -24,7 +31,7 @@ class UserPagination extends Component {
                         <PaginationLink previous onClick={this.loadPreviousPage} href="#">Previous</PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
-                        <PaginationLink next href="#">Next</PaginationLink>
+                        <PaginationLink next onClick={this.loadNextPage} href="#">Next</PaginationLink>
                     </PaginationItem>
                 </Pagination>
             </div>

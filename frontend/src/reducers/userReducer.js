@@ -14,6 +14,7 @@ export default (state = initState, action) => {
                 ...state,
                 hasMore: action.payload.hasMore,
                 users: action.payload.users,
+                page: action.payload.page,
                 loading: false
             }
         case DELETE_USER:
