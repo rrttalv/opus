@@ -15,20 +15,10 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     forgot_token: {
-        time: {
-            type: Date
-        },
-        token: {
-            type: String
-        }
+        type: String
     },
     confirm_token: {
-        time: {
-            type: Date
-        },
-        token: {
-            type: String
-        }
+        type: String
     },
     login_count: {
         type: [{type: Date}]

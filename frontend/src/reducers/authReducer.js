@@ -11,6 +11,7 @@ const initState = {
     isAuthenticated: false,
     isLoading: false,
     hasRegistered: false,
+    hasVerified: false,
     user: null
 };
 
@@ -43,12 +44,17 @@ export default (state = initState, action) => {
                 isLoading: false
             }
         case REGISTER_SUCCESS:
-            console.log(state)
             return{
                 ...state,
                 hasRegistered: true,
                 user: null,
                 token: null
+            }
+        case VERIFY_EMAIL:
+            return{
+                ...state,
+                user: null,
+                hasVerified: true
             }
         case LOGIN_FAIL:
         case REGISTER_FAIL:
@@ -56,7 +62,6 @@ export default (state = initState, action) => {
         case STOP_LOADING:
         case RESET_ERROR:
         case VERIFY_ERROR:
-        case VERIFY_EMAIL:
         case RESET_PASSWORD:
         case UPDATE_PASSWORD: {
             localStorage.clear();

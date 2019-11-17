@@ -8,7 +8,7 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom'
 
 class LoginModal extends Component {
-    componentDidUpdate(errorState) {
+    componentDidUpdate = errorState => {
         if(this.props.error !== errorState.error){
             if(this.props.error.id === 'LOGIN_FAIL'){
                 this.setState({error: true, errorMessage: this.props.error.message});

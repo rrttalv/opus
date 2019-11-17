@@ -34,9 +34,6 @@ router.post('/register',
         res.status(400).json({message: message});
     }else{
         trimAndSanitize(req.body).then((body) => {
-            //Set verification token to expire in 7 days
-            var expiryDate = new Date();
-            expiryDate = new Date(expiryDate.setDate(expiryDate.getDate()+7)).toISOString();
             //Generate verification token
             genEmailToken().then((token) => {
                 let newUser = new User({
@@ -44,10 +41,7 @@ router.post('/register',
                     lastName: body.lastName,
                     email: body.email,
                     password: body.password,
-                    confirm_token: {
-                        token: token,
-                        time: expiryDate
-                    }
+                    confirm_token: token
                 })
                 //Hash password
                 hashUserPassword(newUser).then((hashedUser) => {
@@ -56,7 +50,7 @@ router.post('/register',
                             Send email to user. Can only send free emails to domains with verified sender signature. 
                             Currently verified: pohi.io
                         */
-                        renderVerifyEmail('asd', `http://localhost:3000/verify`).then((template) => {
+                        renderVerifyEmail(savedUser.confirm_token, `http://localhost:3000/verify`).then((template) => {
                             sendVerifyEmail(template, 'ricotalvar@pohi.io').then(() => {
                                 res.json(savedUser)
                             }).catch(next);
@@ -66,7 +60,7 @@ router.post('/register',
             }).catch(next);
         }).catch(next);
     }
-})
+});
 
 router.post('/login', 
     /*
@@ -98,17 +92,34 @@ router.post('/login',
     }else{
         trimAndSanitize(req.body).then((body) => {
             findByEmail(body.email).then((user) => {
-                //if(!user.confirm_token){
+                if(!user.confirm_token){
                     addLoginLog(user.id).then(() => {
                         const id_token = jsonwebtoken.sign({user: user}, config.get('jwtS'), {expiresIn: 604800000});
                         res.json({token: id_token, user: user})
                     }).catch(next);
-                /*}else{
+                }else{
                     res.status(400).json({message: "Please confirm your email address"})
-                }*/
+                }
             }).catch(next);
         }).catch(next);
     }
+});
+
+router.put('/verify/:authToken', (req, res, next) => {
+    /*
+        Gets users authentication token from params and sets the user's email status to verified or sends error.
+    */
+   trimAndSanitize({token: req.params.authToken}).then((sanitizedToken) => {
+        findByVerifyToken(sanitizedToken.token).then((user) => {
+            if(!user){
+                res.status(400).json({message: "Invalid token"});
+            }else{
+                verifyUserEmail(user._id).then(() => {
+                    res.json(true)
+                }).catch(next);
+            }
+        }).catch(next);
+   }).catch(next);
 })
 
 router.get('/signed', authUser, (req, res, next) => {
@@ -120,7 +131,7 @@ router.get('/signed', authUser, (req, res, next) => {
             res.json(user);
         }
     }).catch(next);
-})
+});
 
 const addLoginLog = async (id) => {
     /*
@@ -128,13 +139,27 @@ const addLoginLog = async (id) => {
     */
     let currentDate = new Date().toISOString()
     return await User.updateOne({_id: id}, {$push: {'login_count': currentDate}});
-}
+};
 
 const findByEmail = async (emailAddress) => {
     /*
-        Async function to find one user by their email address.
+        Async function to find one user by their email field.
     */
     return await User.findOne({email: emailAddress});
+};
+
+const findByVerifyToken = async (token) => {
+    /*
+        Async function which finds user by their email token field.
+    */
+   return await User.findOne({'confirm_token': token})
+}
+
+const verifyUserEmail = async (userID) => {
+    /*
+        Function which nulls the confirm_token field on a user object enabling login.
+    */
+   return await User.updateOne({_id: userID}, {$unset: {'confirm_token': undefined}});
 }
 
 export default router;
