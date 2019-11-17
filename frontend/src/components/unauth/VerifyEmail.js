@@ -65,8 +65,8 @@ class VerifyEmail extends Component {
                         name={element.name}
                         type={element.type} 
                         onChange={this.handleChange} 
-                        placeholder={element.placeholder} 
-                        autoComplete="false"></Input>
+                        placeholder={element.placeholder}
+                        ></Input>
                     </FormGroup>
                 ))}
                 <Button style={buttonStyle} onClick={this.handleTokenSubmit} type="submit">{`Verify`}</Button>

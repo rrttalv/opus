@@ -12,6 +12,8 @@ const initState = {
     isLoading: false,
     hasRegistered: false,
     hasVerified: false,
+    hasReset: false,
+    hasUpdated: false,
     user: null
 };
 
@@ -55,6 +57,16 @@ export default (state = initState, action) => {
                 ...state,
                 user: null,
                 hasVerified: true
+            }
+        case RESET_PASSWORD:
+            return{
+                ...state,
+                hasReset: true
+            }
+        case UPDATE_PASSWORD:
+            return{
+                ...state,
+                hasUpdated: true
             }
         case LOGIN_FAIL:
         case REGISTER_FAIL:

@@ -12,11 +12,24 @@ export const renderVerifyEmail = async (verifyToken, verifyLink) => {
     return await ejs.render(verifyTemplate, {token: verifyToken, link: verifyLink});
 }
 
-export const sendVerifyEmail = async (emailTemplate, sendTo) => {
+export const sendVerifyEmail = async (template, sendTo) => {
     client.sendEmail({
         From: "ricotalvar@pohi.io",
         To: sendTo,
         Subject: "Verify email",
-        HtmlBody: emailTemplate
+        HtmlBody: template
+    })
+}
+
+export const renderForgotEmail = async (forgotLink) => {
+    return await ejs.render(forgotPasswordTemplate, {link: forgotLink});
+}
+
+export const sendForgotEmail = async (template, sendTo) => {
+    client.sendEmail({
+        From: "ricotalvar@pohi.io",
+        To: sendTo,
+        Subject: "Forgot password",
+        HtmlBody: template
     })
 }

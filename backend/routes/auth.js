@@ -1,13 +1,14 @@
 import User, { comparePassword, saveNewUser, hashUserPassword } from '../models/user';
 import express from 'express';
 import { check, validationResult } from 'express-validator';
-import { genEmailToken } from '../other/tokens';
+import { genEmailToken, genForgotToken } from '../other/tokens';
 import validator from 'validator';
 import config from 'config';
 import jsonwebtoken from 'jsonwebtoken';
 import { trimAndSanitize } from '../other/sanitize';
 import { authUser } from '../other/middleware';
-import { sendVerifyEmail, renderVerifyEmail } from '../other/sendEmail';
+import { sendVerifyEmail, renderVerifyEmail, 
+        renderForgotEmail, sendForgotEmail } from '../other/sendEmail';
 /*
     All unauthenticated routes live in this file.
 */
@@ -39,7 +40,7 @@ router.post('/register',
                 let newUser = new User({
                     firstName: body.firstName,
                     lastName: body.lastName,
-                    email: body.email,
+                    email: body.email.toLowerCase(),
                     password: body.password,
                     confirm_token: token
                 })
@@ -120,6 +121,27 @@ router.put('/verify/:authToken', (req, res, next) => {
             }
         }).catch(next);
    }).catch(next);
+});
+
+router.post('/reset', (req, res, next) => {
+    /*
+        Generates and sends user an email with reset password url.
+    */
+   genForgotToken().then((token) => {
+       trimAndSanitize(req.body).then((sanitizedBody) => {
+            setForgotPasswordToken(sanitizedBody.email.toLowerCase(), token).then((user) => {
+                renderForgotEmail(`http://localhost:3000/reset?resetToken=${token}`).then((template) => {
+                    sendForgotEmail(template, 'ricotalvar@pohi.io').then(() => {
+                        res.json(true);
+                    }).catch(next);
+                }).catch(next);
+            }).catch((err) => {
+                //Will "send" a token to user. This way cant check if user with email exists or not.
+                console.log(err);
+                res.json(true);
+            });
+       }).catch(next);
+   }).catch(next);
 })
 
 router.get('/signed', authUser, (req, res, next) => {
@@ -160,6 +182,13 @@ const verifyUserEmail = async (userID) => {
         Function which nulls the confirm_token field on a user object enabling login.
     */
    return await User.updateOne({_id: userID}, {$unset: {'confirm_token': undefined}});
+}
+
+const setForgotPasswordToken = async (emailAddress, token) => {
+    /*
+        Updates user object with a reset password token
+    */
+   return await User.findOneAndUpdate({email: emailAddress}, {$set: {forgot_token: token}})
 }
 
 export default router;

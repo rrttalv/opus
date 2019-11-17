@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 class UserPagination extends Component {
-
-
     loadPreviousPage = () => {
         const { page } = this.props.users;
         if(page > 0){
@@ -23,16 +21,17 @@ class UserPagination extends Component {
 
     render() {
         const paginationLinkStyle = {color: '#03A9F4'};
-        const paginationContainerStyle = {display: 'flex', justifyContent: 'center'}
+        const paginationContainerStyle = {display: 'flex', justifyContent: 'center'};
+        const paginationItemStyle = {marginRight: '5px', minWidth: '10%', textAlign: 'center'}
         return (
             <div>
-                <Pagination style={paginationContainerStyle}>
-                    <PaginationItem>
+                <Pagination className="margin-top" style={paginationContainerStyle}>
+                    <PaginationItem style={paginationItemStyle}>
                         <PaginationLink previous onClick={this.loadPreviousPage} href="#">
                             <span style={paginationLinkStyle}>{`Previous`}</span>
                         </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem>
+                    <PaginationItem style={paginationItemStyle}>
                         <PaginationLink next onClick={this.loadNextPage} href="#">
                             <span style={paginationLinkStyle}>{`Next`}</span>
                         </PaginationLink>

@@ -41,6 +41,18 @@ export const verifyEmailAddress = emailToken => (dispatch) => {
     })
 }
 
+export const resetPassword = passwordDetails => (dispatch) => {
+    axios.post(`/auth/reset/`, passwordDetails).then(res => dispatch({
+        type: RESET_PASSWORD,
+        payload: res.data
+    })).catch((err) => {
+        dispatch(getErrors(err.response.data.message, err.response.status, 'RESET_ERROR'));
+        dispatch({
+            type: RESET_ERROR
+        });
+    })
+}
+
 export const logout = () => (dispatch) => {
     dispatch({
         type: LOGOUT
