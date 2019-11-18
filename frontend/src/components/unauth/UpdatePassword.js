@@ -12,17 +12,33 @@ class UpdatePassword extends Component {
         this.state = {
             resetToken: '',
             error: false,
-            errorMessage: ''
+            errorMessage: '',
+            password: ''
         }
     }
 
     componentDidUpdate = currentState => {
-        if(currentState.error !== this.props.error && this.props.error.id === 'RESET_ERROR'){
-            this.setState({error: true, errorMessage: this.props.error.message})
-            setTimeout(() => {
-                this.props.history.push('/');
-            }, 3000)
+        if(currentState.error !== this.props.error){
+            if(this.props.error.id === 'INVALID_TOKEN'){
+                this.setState({error: true, errorMessage: this.props.error.message});
+                setTimeout(() => {
+                    this.props.clearAllErrors();
+                    this.props.history.push('/');
+                }, 3000)
+            }
+            if(this.props.error.id === 'RESET_ERROR'){
+                this.setState({error: true, errorMessage: this.props.error.message});
+            }
         }
+    }
+
+    handleChange = e => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    submitNewPassword = e => {
+        e.preventDefault();
+        this.props.resetPassword(this.state.password, this.props.history)
     }
 
     componentDidMount = () => {
@@ -31,14 +47,32 @@ class UpdatePassword extends Component {
     }
 
     render() {
+        const formSchema = [{
+            password: 'password',
+            label: 'New password',
+            placeholder: 'Enter a new password',
+            type: 'password'
+        }];
+        const formStyle = {width: '50%', margin: '0 auto', textAlign: 'left', padding: '2rem 2rem'};
+        const buttonStyle = {width: '100%'};
         return (
             <div>
-                <Container>
+                <Container style={{textAlign: 'center'}}>
+                        <h3>{`${'Reset password'}`}</h3>
                     <ErrorDisplay error={this.state.error} message={this.state.errorMessage} />
-                    <Form>
-                        <FormGroup>
-                            
-                        </FormGroup>
+                    <Form style={formStyle}>
+                        {formSchema.map((element, i) => (
+                            <FormGroup key={i}>
+                                <Label>{element.label}</Label>
+                                <Input
+                                    name={element.name}
+                                    type={element.type}
+                                    placeholder={element.placeholder}
+                                    onChange={this.handleChange}
+                                ></Input>         
+                            </FormGroup>
+                        ))}
+                    <Button style={buttonStyle} onClick={this.submitNewPassword} type="submit">{`Submit Password`}</Button>
                     </Form>
                 </Container>
             </div>
@@ -51,4 +85,4 @@ const mapStateToProps = state => ({
     error: state.error
 })
 
-export default connect(mapStateToProps, { checkPasswordToken, resetPassword })(withRouter(UpdatePassword))
+export default connect(mapStateToProps, { checkPasswordToken, resetPassword, clearAllErrors })(withRouter(UpdatePassword))

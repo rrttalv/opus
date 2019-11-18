@@ -18,7 +18,7 @@ class ForgotPassword extends Component {
 
     handleEmailSubmit = (e) => {
         e.preventDefault();
-        this.props.resetPassword(this.state, this.props.history)
+        this.props.resetPassword(this.state, this.props.location)
     }
 
     render() {
@@ -47,7 +47,7 @@ class ForgotPassword extends Component {
                             ></Input>
                         </FormGroup>
                     ))}
-                <Button style={buttonStyle} onClick={this.handleEmailSubmit} type="submit">{`Reset Password`}</Button>
+                <Button style={buttonStyle} onClick={this.handleEmailSubmit} type="submit">{`Send Reset Email`}</Button>
                 </Form>
             </Container>
         )
