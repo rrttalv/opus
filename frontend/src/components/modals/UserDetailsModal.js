@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ModalBody, ModalHeader, Row, Col, Table } from 'reactstrap';
-
+import { PropTypes } from 'prop-types';
 class UserDetailsModal extends Component {
     
     render() {
@@ -35,6 +35,11 @@ class UserDetailsModal extends Component {
             </div>
         )
     }
+}
+
+UserDetailsModal.propTypes = {
+    toggle: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired
 }
 
 export default UserDetailsModal;

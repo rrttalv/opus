@@ -19,4 +19,8 @@ class Logout extends Component {
     }
 }
 
-export default connect(null, {logout})(Logout)
+Logout.propTypes = {
+    logout: PropTypes.func.isRequired
+}
+
+export default connect(null, { logout })(Logout)

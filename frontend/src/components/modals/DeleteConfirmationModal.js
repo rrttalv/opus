@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ModalBody, ModalFooter, Row, Col, Button } from 'reactstrap';
 import { deleteUser } from '../../actions/userActions';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
 class DeleteConfirmationModal extends Component {    
 
@@ -36,6 +37,12 @@ class DeleteConfirmationModal extends Component {
             </div>
         )
     }
+}
+
+DeleteConfirmationModal.propTypes = {
+    user: PropTypes.object.isRequired,
+    toggle: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired
 }
 
 const matchStateToProps = state => ({

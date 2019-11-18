@@ -1,15 +1,12 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem } from 'reactstrap';
+import { Collapse, Navbar,
+        NavbarToggler, NavbarBrand,
+        Nav, NavItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import RegisterModal from './modals/RegisterModal';
 import LoginModal from './modals/LoginModal';
 import Logout from './Logout';
+import { PropTypes } from 'prop-types';
 
 class AppNav extends Component {
     constructor(props){
@@ -63,8 +60,12 @@ class AppNav extends Component {
     }
 }
 
+AppNav.propTypes = {
+    auth: PropTypes.bool.isRequired
+}
+
 const mapStateToProps = state => ({
     auth: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, {AppNav})(AppNav);
+export default connect(mapStateToProps, null)(AppNav);

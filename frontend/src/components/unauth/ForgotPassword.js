@@ -3,6 +3,7 @@ import { Button, Container, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { sendResetPasswordRequest } from '../../actions/authActions';
 import { withRouter } from "react-router-dom";
+import { PropTypes } from 'prop-types';
 
 class ForgotPassword extends Component {
     constructor(props){
@@ -52,6 +53,10 @@ class ForgotPassword extends Component {
             </Container>
         )
     }
+}
+
+ForgotPassword.propTypes = {
+    sendResetPasswordRequest: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

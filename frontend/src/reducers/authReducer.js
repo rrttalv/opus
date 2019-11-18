@@ -54,7 +54,8 @@ export default (state = initState, action) => {
         case UPDATE_PASSWORD:
         case VERIFY_EMAIL:
         case VERIFY_PASSWORD_TOKEN:
-        case UPDATE_PASSWORD: {
+        case UPDATE_PASSWORD:
+        case VERIFY_TOKEN_ERROR: {
             localStorage.clear();
             return{
                 ...state,

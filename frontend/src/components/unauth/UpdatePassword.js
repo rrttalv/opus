@@ -5,6 +5,7 @@ import { Button, Container, FormGroup, Form, Label, Input } from 'reactstrap';
 import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
 import { withRouter } from "react-router-dom";
+import { PropTypes } from 'prop-types';
 
 class UpdatePassword extends Component {
     constructor(props){
@@ -85,8 +86,14 @@ class UpdatePassword extends Component {
     }
 }
 
+UpdatePassword.propTypes = {
+    clearAllErrors: PropTypes.func.isRequired,
+    checkPasswordToken: PropTypes.func.isRequired,
+    resetPassword: PropTypes.func.isRequired,
+    error: PropTypes.object
+}
+
 const mapStateToProps = state => ({
-    auth: state.auth,
     error: state.error
 })
 

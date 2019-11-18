@@ -8,8 +8,6 @@ const verifyTemplate = fs.readFileSync('emails/verifyEmail.ejs', 'utf8'),
 
 const client = new postmark.ServerClient(config.get('emailApi'));
 
-//client.sendEmail()
-
 export const renderVerifyEmail = async (verifyToken, verifyLink) => {
     return await ejs.render(verifyTemplate, {token: verifyToken, link: verifyLink});
 }

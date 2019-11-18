@@ -5,6 +5,7 @@ import { verifyEmailAddress } from '../../actions/authActions'
 import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
 import { withRouter } from "react-router-dom";
+import { PropTypes } from 'prop-types';
 
 class VerifyEmail extends Component {
     
@@ -69,6 +70,13 @@ class VerifyEmail extends Component {
             </Container>
         )
     }
+}
+
+VerifyEmail.propTypes = {
+    verifyEmailAddress: PropTypes.func.isRequired,
+    clearAllErrors: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    error: PropTypes.object
 }
 
 const mapStateToProps = state => ({
