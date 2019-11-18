@@ -12,10 +12,6 @@ const initState = {
     isAuthenticated: false,
     isLoading: false,
     hasRegistered: false,
-    hasVerified: false,
-    isValidToken: false,
-    hasReset: false,
-    hasUpdated: false,
     user: null
 };
 
@@ -57,23 +53,19 @@ export default (state = initState, action) => {
         case VERIFY_EMAIL:
             return{
                 ...state,
-                user: null,
-                hasVerified: true
+                user: null
             }
         case RESET_PASSWORD:
             return{
-                ...state,
-                hasReset: true
+                ...state
             }
         case UPDATE_PASSWORD:
             return{
-                ...state,
-                hasUpdated: true
+                ...state
             }
         case VERIFY_PASSWORD_TOKEN:
             return{
-                ...state,
-                isValidToken: true
+                ...state
             }
         case LOGIN_FAIL:
         case REGISTER_FAIL:

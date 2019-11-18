@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Container, FormGroup, Form, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { resetPassword } from '../../actions/authActions';
+import { withRouter } from "react-router-dom";
 
 class ForgotPassword extends Component {
     constructor(props){
@@ -11,20 +12,13 @@ class ForgotPassword extends Component {
         }
     }
 
-    componentDidUpdate = () => {
-        console.log(this.props.auth)
-        if(this.props.auth.hasReset){
-            this.props.history.push('/');
-        }
-    }
-
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
 
     handleEmailSubmit = (e) => {
         e.preventDefault();
-        this.props.resetPassword(this.state)
+        this.props.resetPassword(this.state, this.props.history)
     }
 
     render() {
@@ -64,4 +58,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, {resetPassword})(ForgotPassword)
+export default connect(mapStateToProps, {resetPassword})(withRouter(ForgotPassword))

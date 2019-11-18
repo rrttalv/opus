@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { verifyEmailAddress } from '../../actions/authActions'
 import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
+import { withRouter } from "react-router-dom";
 
 class VerifyEmail extends Component {
     
@@ -29,15 +30,9 @@ class VerifyEmail extends Component {
         }
     }
 
-    componentDidMount = () => {
-        if(this.props.auth.isAuthenticated){
-            this.props.history.push('/dashboard')
-        }
-    }
-
     handleTokenSubmit = (e) => {
         e.preventDefault();
-        this.props.verifyEmailAddress(this.state.emailToken);
+        this.props.verifyEmailAddress(this.state.emailToken, this.props.history);
     }
 
     handleChange = (e) => {
@@ -81,4 +76,4 @@ const mapStateToProps = state => ({
     error: state.error
 })
 
-export default connect(mapStateToProps, { verifyEmailAddress, clearAllErrors })(VerifyEmail);
+export default connect(mapStateToProps, { verifyEmailAddress, clearAllErrors })(withRouter(VerifyEmail));

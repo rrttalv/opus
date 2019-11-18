@@ -123,6 +123,23 @@ router.put('/verify/:authToken', (req, res, next) => {
    }).catch(next);
 });
 
+router.get('/reset/:passwordToken', (req, res, next) => {
+    /*
+        Checks if user with password token exists
+    */
+    let token = req.params.passwordToken;
+    trimAndSanitize({token: token}).then((sanitizedParams) => {
+        verifyPasswordToken(sanitizedParams.token).then((user) => {
+            if(!user){
+                res.status(400).json({message: 'Invalid token'});
+            }else{
+                console.log(user)
+                res.json(true);
+            }
+        }).catch(next);
+    }).catch(next);
+});
+
 router.post('/reset', (req, res, next) => {
     /*
         Generates and sends user an email with reset password url.
@@ -142,7 +159,7 @@ router.post('/reset', (req, res, next) => {
             });
        }).catch(next);
    }).catch(next);
-})
+});
 
 router.get('/signed', authUser, (req, res, next) => {
     /*
@@ -175,20 +192,34 @@ const findByVerifyToken = async (token) => {
         Async function which finds user by their email token field.
     */
    return await User.findOne({'confirm_token': token})
-}
+};
 
 const verifyUserEmail = async (userID) => {
     /*
         Function which nulls the confirm_token field on a user object enabling login.
     */
    return await User.updateOne({_id: userID}, {$unset: {'confirm_token': undefined}});
-}
+};
 
 const setForgotPasswordToken = async (emailAddress, token) => {
     /*
         Updates user object with a reset password token
     */
    return await User.findOneAndUpdate({email: emailAddress}, {$set: {forgot_token: token}})
+};
+
+const verifyPasswordToken = async (token) => {
+    /*
+        Checks if user with specified token exists
+    */
+   return await User.findOne({forgot_token: token});
+}
+
+const updatePassword = async (token, hashedPassword) => {
+    /* 
+        Finds user with forgot_token and changes their password.
+    */
+   return await User.findOne({forgot_token: token}, {$set: {password: hashedPassword}, $unset: {forgot_token: undefined}});
 }
 
 export default router;

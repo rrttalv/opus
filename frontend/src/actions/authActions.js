@@ -29,11 +29,13 @@ export const getLoginStatus = () => (dispatch, getState) => {
     }
 }
 
-export const verifyEmailAddress = emailToken => (dispatch) => {
+export const verifyEmailAddress = (emailToken, history) => (dispatch) => {
     axios.put(`/auth/verify/${emailToken}`).then(res => dispatch({
         type: VERIFY_EMAIL,
         payload: res.data
-    })).catch((err) => {
+    })).then(() => {
+        history.push('/')
+    }).catch((err) => {
         dispatch(getErrors(err.response.data.message, err.response.status, 'VERIFY_ERROR'));
         dispatch({
             type: VERIFY_ERROR
@@ -46,15 +48,20 @@ export const checkPasswordToken = token => (dispatch) => {
         type: VERIFY_PASSWORD_TOKEN,
         payload: res.data
     })).catch((err) => {
-
+        dispatch(getErrors(err.response.data.message, err.response.status, 'RESET_ERROR'));
+        dispatch({
+            type: RESET_ERROR
+        });
     });
 }
 
-export const resetPassword = passwordDetails => (dispatch) => {
+export const resetPassword = (passwordDetails, history) => (dispatch) => {
     axios.post(`/auth/reset/`, passwordDetails).then(res => dispatch({
         type: RESET_PASSWORD,
         payload: res.data
-    })).catch((err) => {
+    })).then(() => {
+        history.push('/')
+    }).catch((err) => {
         dispatch(getErrors(err.response.data.message, err.response.status, 'RESET_ERROR'));
         dispatch({
             type: RESET_ERROR
