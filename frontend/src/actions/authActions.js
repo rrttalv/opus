@@ -2,7 +2,7 @@ import { REGISTER_FAIL, USER_LOADING, REGISTER_SUCCESS,
         LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR,
         USER_LOADED, LOGOUT, STOP_LOADING,
         UPDATE_PASSWORD, VERIFY_EMAIL, RESET_PASSWORD,
-        VERIFY_ERROR, RESET_ERROR } from './constants';
+        VERIFY_ERROR, RESET_ERROR, VERIFY_PASSWORD_TOKEN } from './constants';
 import axios from 'axios'
 import { getErrors } from './errorActions';
 import { history } from '../index';
@@ -39,6 +39,15 @@ export const verifyEmailAddress = emailToken => (dispatch) => {
             type: VERIFY_ERROR
         })
     })
+}
+
+export const checkPasswordToken = token => (dispatch) => {
+    axios.get(`/auth/reset/${token}`).then(res => dispatch({
+        type: VERIFY_PASSWORD_TOKEN,
+        payload: res.data
+    })).catch((err) => {
+
+    });
 }
 
 export const resetPassword = passwordDetails => (dispatch) => {
