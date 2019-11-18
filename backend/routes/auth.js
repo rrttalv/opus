@@ -1,4 +1,4 @@
-import User, { comparePassword, saveNewUser, hashUserPassword } from '../models/user';
+import User, { comparePassword, saveNewUser, hashUserPassword, hashPassword } from '../models/user';
 import express from 'express';
 import { check, validationResult } from 'express-validator';
 import { genEmailToken, genForgotToken } from '../other/tokens';
@@ -123,7 +123,7 @@ router.put('/verify/:authToken', (req, res, next) => {
    }).catch(next);
 });
 
-router.get('/reset/:passwordToken', (req, res, next) => {
+router.get('/reset/password/:passwordToken', (req, res, next) => {
     /*
         Checks if user with password token exists
     */
@@ -133,11 +133,26 @@ router.get('/reset/:passwordToken', (req, res, next) => {
             if(!user){
                 res.status(400).json({message: 'Invalid token'});
             }else{
-                console.log(user)
                 res.json(true);
             }
         }).catch(next);
     }).catch(next);
+});
+
+router.post('/reset/password',
+    [check('password', 'Make sure your password is at least 8 characters long!').exists().isLength(8)],
+    (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        let message = errors.array()[0].msg;
+        res.status(400).json({message: message});
+    }else{
+        hashPassword(req.body.password).then((hashedPassword) => {
+            updatePassword(req.body.passwordToken, hashedPassword).then(() => {
+                res.json(true);
+            }).catch(next);
+        }).catch(next);
+    }
 });
 
 router.post('/reset', (req, res, next) => {
@@ -219,7 +234,7 @@ const updatePassword = async (token, hashedPassword) => {
     /* 
         Finds user with forgot_token and changes their password.
     */
-   return await User.findOne({forgot_token: token}, {$set: {password: hashedPassword}, $unset: {forgot_token: undefined}});
+   return await User.updateOne({forgot_token: token}, {$set: {password: hashedPassword}, $unset: {forgot_token: undefined}});
 }
 
 export default router;

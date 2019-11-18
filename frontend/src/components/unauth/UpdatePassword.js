@@ -13,21 +13,21 @@ class UpdatePassword extends Component {
             resetToken: '',
             error: false,
             errorMessage: '',
-            password: ''
+            password: '',
+            passwordToken: ''
         }
     }
 
     componentDidUpdate = currentState => {
         if(currentState.error !== this.props.error){
-            if(this.props.error.id === 'INVALID_TOKEN'){
-                this.setState({error: true, errorMessage: this.props.error.message});
-                setTimeout(() => {
-                    this.props.clearAllErrors();
-                    this.props.history.push('/');
-                }, 3000)
+            if(this.props.error.id === 'VERIFY_TOKEN_ERROR'){
+                this.props.history.push('/');
+                this.props.clearAllErrors();
             }
             if(this.props.error.id === 'RESET_ERROR'){
                 this.setState({error: true, errorMessage: this.props.error.message});
+            }else{
+                this.setState({error: false, errorMessage: ''})
             }
         }
     }
@@ -38,17 +38,22 @@ class UpdatePassword extends Component {
 
     submitNewPassword = e => {
         e.preventDefault();
-        this.props.resetPassword(this.state.password, this.props.history)
+        let requestBody = {
+            passwordToken: this.state.passwordToken, 
+            password: this.state.password
+        }
+        this.props.resetPassword(requestBody, this.props.history)
     }
 
     componentDidMount = () => {
-        let queryParams = this.props.location.search.split("=")[1];
-        this.props.checkPasswordToken(queryParams);
+        let tokenFromParams = this.props.location.search.split("=")[1];
+        this.setState({passwordToken: tokenFromParams});
+        this.props.checkPasswordToken(tokenFromParams);
     }
 
     render() {
         const formSchema = [{
-            password: 'password',
+            name: 'password',
             label: 'New password',
             placeholder: 'Enter a new password',
             type: 'password'
@@ -59,8 +64,8 @@ class UpdatePassword extends Component {
             <div>
                 <Container style={{textAlign: 'center'}}>
                         <h3>{`${'Reset password'}`}</h3>
-                    <ErrorDisplay error={this.state.error} message={this.state.errorMessage} />
                     <Form style={formStyle}>
+                    <ErrorDisplay error={this.state.error} message={this.state.errorMessage} />
                         {formSchema.map((element, i) => (
                             <FormGroup key={i}>
                                 <Label>{element.label}</Label>

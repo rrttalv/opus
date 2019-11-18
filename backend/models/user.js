@@ -42,6 +42,11 @@ export const hashUserPassword = async (user) => {
     return user;
 }
 
+export const hashPassword = async (textPassword) => {
+    let salt = await bcrypt.genSaltSync(10);
+    return await bcrypt.hashSync(textPassword, salt);
+}
+
 export const saveNewUser = async (user) => {
     return await user.save();
 }

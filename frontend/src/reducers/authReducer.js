@@ -5,7 +5,7 @@ import { REGISTER_FAIL, REGISTER_SUCCESS,
         STOP_LOADING, VERIFY_EMAIL, 
         RESET_PASSWORD, UPDATE_PASSWORD,
         RESET_ERROR, VERIFY_ERROR,
-        VERIFY_PASSWORD_TOKEN } from '../actions/constants';
+        VERIFY_PASSWORD_TOKEN, VERIFY_TOKEN_ERROR } from '../actions/constants';
 
 const initState = {
     token: localStorage.getItem('id_token'),

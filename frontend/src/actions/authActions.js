@@ -2,7 +2,8 @@ import { REGISTER_FAIL, USER_LOADING, REGISTER_SUCCESS,
         LOGIN_SUCCESS, LOGIN_FAIL, AUTH_ERROR,
         USER_LOADED, LOGOUT, STOP_LOADING,
         UPDATE_PASSWORD, VERIFY_EMAIL, RESET_PASSWORD,
-        VERIFY_ERROR, RESET_ERROR, VERIFY_PASSWORD_TOKEN } from './constants';
+        VERIFY_ERROR, RESET_ERROR, VERIFY_PASSWORD_TOKEN,
+        VERIFY_TOKEN_ERROR } from './constants';
 import axios from 'axios'
 import { getErrors } from './errorActions';
 import { history } from '../index';
@@ -44,20 +45,20 @@ export const verifyEmailAddress = (emailToken, history) => (dispatch) => {
 }
 
 export const checkPasswordToken = token => (dispatch) => {
-    axios.get(`/auth/reset/${token}`).then(res => dispatch({
+    axios.get(`/auth/reset/password/${token}`).then(res => dispatch({
         type: VERIFY_PASSWORD_TOKEN,
         payload: res.data
     })).catch((err) => {
-        dispatch(getErrors(err.response.data.message, err.response.status, 'RESET_ERROR'));
+        dispatch(getErrors(err.response.data.message, err.response.status, 'VERIFY_TOKEN_ERROR'));
         dispatch({
-            type: RESET_ERROR
+            type: VERIFY_TOKEN_ERROR
         });
     });
 }
 
 export const resetPassword = (passwordDetails, history) => (dispatch) => {
-    axios.post(`/auth/reset/`, passwordDetails).then(res => dispatch({
-        type: RESET_PASSWORD,
+    axios.post(`/auth/reset/password/`, passwordDetails).then(res => dispatch({
+        type: UPDATE_PASSWORD,
         payload: res.data
     })).then(() => {
         history.push('/')
@@ -66,6 +67,15 @@ export const resetPassword = (passwordDetails, history) => (dispatch) => {
         dispatch({
             type: RESET_ERROR
         });
+    })
+}
+
+export const sendResetPasswordRequest = (userDetails, history) => (dispatch) => {
+    axios.post(`/auth/reset`, userDetails).then(res => dispatch({
+        type: RESET_PASSWORD,
+        payload: res.data
+    })).then(() => {
+        history.push('/')
     })
 }
 
