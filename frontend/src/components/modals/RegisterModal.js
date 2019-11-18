@@ -16,7 +16,6 @@ class RegisterModal extends Component {
             firstName: '',
             lastName: '',
             error: false,
-            hasRegistered: false,
             errorMessage: ''
         }
     }
@@ -27,11 +26,6 @@ class RegisterModal extends Component {
                 this.setState({error: true, errorMessage: this.props.error.message})
             }else{
                 this.setState({error: false, errorMessage: ''})
-            }
-        }
-        if(this.state.modalOpen){
-            if(this.props.hasReg){
-                this.toggle();
             }
         }
     }
@@ -51,7 +45,7 @@ class RegisterModal extends Component {
             lastName: this.state.lastName,
             password: this.state.password
         }
-        this.props.registerUser(newUser);
+        this.props.registerUser(newUser, this.toggle);
     }
 
     handleChange = e => {
@@ -64,28 +58,24 @@ class RegisterModal extends Component {
                 name: "firstName",
                 label: "First name",
                 placeholder: "Your first name",
-                required: true,
                 type: "text"
             },
             {   
                 name: "lastName",
                 label: "Last name",
                 placeholder: "Your last name",
-                required: true,
                 type: "text"
             },
             {   
                 name: "email",
                 label: "Email address",
                 placeholder: "Your email address",
-                required: true,
                 type: "text"
             },
             {   
                 name: "password",
                 label: "Password",
                 placeholder: "Select a password",
-                required: true,
                 type: "password"
             }
         ]
@@ -101,7 +91,7 @@ class RegisterModal extends Component {
                     <ModalBody>
                     <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
                         <Form>
-                            {formSchema.map(({label, name, type, placeholder, required}) => (
+                            {formSchema.map(({label, name, type, placeholder}) => (
                                 <FormGroup key={label}>
                                     <Label>{label}</Label>
                                     <Input 
@@ -125,12 +115,10 @@ class RegisterModal extends Component {
 RegisterModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
-    hasReg: PropTypes.bool,
     error: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    hasReg: state.auth.hasRegistered,
     error: state.error
 })
 

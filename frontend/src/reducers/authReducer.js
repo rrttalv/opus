@@ -11,7 +11,6 @@ const initState = {
     token: localStorage.getItem('id_token'),
     isAuthenticated: false,
     isLoading: false,
-    hasRegistered: false,
     user: null
 };
 
@@ -43,30 +42,6 @@ export default (state = initState, action) => {
                 isAuthenticated: true,
                 isLoading: false
             }
-        case REGISTER_SUCCESS:
-            return{
-                ...state,
-                hasRegistered: true,
-                user: null,
-                token: null
-            }
-        case VERIFY_EMAIL:
-            return{
-                ...state,
-                user: null
-            }
-        case RESET_PASSWORD:
-            return{
-                ...state
-            }
-        case UPDATE_PASSWORD:
-            return{
-                ...state
-            }
-        case VERIFY_PASSWORD_TOKEN:
-            return{
-                ...state
-            }
         case LOGIN_FAIL:
         case REGISTER_FAIL:
         case AUTH_ERROR:
@@ -74,6 +49,11 @@ export default (state = initState, action) => {
         case RESET_ERROR:
         case VERIFY_ERROR:
         case RESET_PASSWORD:
+        case REGISTER_SUCCESS:
+        case RESET_PASSWORD:
+        case UPDATE_PASSWORD:
+        case VERIFY_EMAIL:
+        case VERIFY_PASSWORD_TOKEN:
         case UPDATE_PASSWORD: {
             localStorage.clear();
             return{

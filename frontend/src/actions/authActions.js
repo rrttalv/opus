@@ -112,12 +112,14 @@ export const loginUser = (userData) => dispatch => {
     });
 }
 
-export const registerUser = (newUser) => dispatch => {
+export const registerUser = (newUser, modalToggle) => dispatch => {
     axios.post('/auth/register', newUser).then(res => {
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
         })
+    }).then(() => {
+        modalToggle();
     }).catch((err) => {
         dispatch(getErrors(err.response.data.message, err.response.status, 'REGISTER_FAIL'));
         dispatch({

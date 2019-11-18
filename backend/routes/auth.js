@@ -162,16 +162,17 @@ router.post('/reset', (req, res, next) => {
    genForgotToken().then((token) => {
        trimAndSanitize(req.body).then((sanitizedBody) => {
             setForgotPasswordToken(sanitizedBody.email.toLowerCase(), token).then((user) => {
-                renderForgotEmail(`http://localhost:3000/reset?resetToken=${token}`).then((template) => {
-                    sendForgotEmail(template, 'ricotalvar@pohi.io').then(() => {
-                        res.json(true);
+                if(!user){
+                    //Will "send" a token to user. This way cant check if user with email exists or not.
+                    res.json(true);
+                }else{
+                    renderForgotEmail(`http://localhost:3000/reset?resetToken=${token}`).then((template) => {
+                        sendForgotEmail(template, 'ricotalvar@pohi.io').then(() => {
+                            res.json(true);
+                        }).catch(next);
                     }).catch(next);
-                }).catch(next);
-            }).catch((err) => {
-                //Will "send" a token to user. This way cant check if user with email exists or not.
-                console.log(err);
-                res.json(true);
-            });
+                }
+            }).catch(next);
        }).catch(next);
    }).catch(next);
 });
