@@ -7,10 +7,11 @@ import config from 'config';
 import { trimAndSanitize } from '../other/sanitize';
 import { renderDeletedAccountEmail, sendDeletedEmail } from '../other/sendEmail';
 
-const router = express.Router();
+/*
+    All routes requiring authentication live in this file.
+*/
 
-router.get('/', (req, res, next) => {
-})
+const router = express.Router();
 
 router.get('/:page', authUser, (req, res, next) => {
     /*

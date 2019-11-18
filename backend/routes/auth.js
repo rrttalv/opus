@@ -10,7 +10,7 @@ import { authUser } from '../other/middleware';
 import { sendVerifyEmail, renderVerifyEmail, 
         renderForgotEmail, sendForgotEmail } from '../other/sendEmail';
 /*
-    All unauthenticated routes live in this file.
+    All routes related to authentication, user login info or something of that nature live in this file.
 */
 
 const router = express.Router();
