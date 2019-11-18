@@ -5,6 +5,7 @@ import { authUser } from '../other/middleware';
 import validator from 'validator';
 import config from 'config';
 import { trimAndSanitize } from '../other/sanitize';
+import { renderDeletedAccountEmail, sendDeletedEmail } from '../other/sendEmail';
 
 const router = express.Router();
 
@@ -31,9 +32,15 @@ router.delete('/delete/:id/:page', authUser, (req, res, next) => {
     let id = req.params.id;
     let page = req.params.page;
     let limit = 10;
-    deleteUser(id).then(() => {
-        findAllUsers(limit, page, limit*page).then((userData) => {
-            res.json({users: userData.inRange, hasMore: userData.hasMore, page: page});
+    let adminAccount = req.user.email;
+    deleteUser(id).then((deletedUser) => {
+        renderDeletedAccountEmail(adminAccount).then((template) => {
+            //Would enter "deletedUser.email" if the email API would be in live use
+            sendDeletedEmail(template, 'ricotalvar@pohi.io').then(() => {
+                findAllUsers(limit, page, limit*page).then((userData) => {
+                    res.json({users: userData.inRange, hasMore: userData.hasMore, page: page});
+                }).catch(next);
+            }).catch(next);
         }).catch(next);
     }).catch(next);
 });
@@ -45,7 +52,7 @@ const findAllUsers = async (limit, page, skip) => {
 }
 
 const deleteUser = async (id) => {
-    return await User.deleteOne({_id: id});
+    return await User.findOneAndDelete({_id: id});
 }
 
 
