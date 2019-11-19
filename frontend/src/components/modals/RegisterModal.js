@@ -6,6 +6,8 @@ import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
 import { addUser } from '../../actions/userActions';
 import { PropTypes } from 'prop-types';
+import { Translate, getActiveLanguage } from "react-localize-redux";
+
 class RegisterModal extends Component {
     constructor(props){
         super(props);
@@ -56,41 +58,74 @@ class RegisterModal extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    getFormSchema = () => {
+        if(this.props.lang.code == "ee"){
+            return [    
+                {   
+                    name: "firstName",
+                    label: "Eesnimi",
+                    placeholder: "Joonas",
+                    type: "text"
+                },
+                {   
+                    name: "lastName",
+                    label: "Perenimi",
+                    placeholder: "Magi",
+                    type: "text"
+                },
+                {   
+                    name: "email",
+                    label: "Emaili aadress",
+                    placeholder: "Sinu meiliaadress",
+                    type: "text"
+                },
+                {   
+                    name: "password",
+                    label: "Parool",
+                    placeholder: "Vali parool",
+                    type: "password"
+                }
+            ]
+        }else{
+            return [    
+                {   
+                    name: "firstName",
+                    label: "First name",
+                    placeholder: "John",
+                    type: "text"
+                },
+                {   
+                    name: "lastName",
+                    label: "Last name",
+                    placeholder: "Smith",
+                    type: "text"
+                },
+                {   
+                    name: "email",
+                    label: "Email address",
+                    placeholder: "Your email address",
+                    type: "text"
+                },
+                {   
+                    name: "password",
+                    label: "Password",
+                    placeholder: "Select a password",
+                    type: "password"
+                }
+            ]
+        }
+    }
+
     render() {
-        const formSchema = [    
-            {   
-                name: "firstName",
-                label: "First name",
-                placeholder: "John",
-                type: "text"
-            },
-            {   
-                name: "lastName",
-                label: "Last name",
-                placeholder: "Smith",
-                type: "text"
-            },
-            {   
-                name: "email",
-                label: "Email address",
-                placeholder: "Email address",
-                type: "text"
-            },
-            {   
-                name: "password",
-                label: "Password",
-                placeholder: "Select a password",
-                type: "password"
-            }
-        ]
+        const formSchema = this.getFormSchema();
         return (
             <div>
-                <NavLink onClick={this.toggle}>{this.props.buttonText}</NavLink>
+                <NavLink onClick={this.toggle}><Translate id="nav.reg.action"></Translate></NavLink>
                 <Modal 
                 isOpen={this.state.modalOpen}
                 toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>
-                        {this.props.modalTitle}
+                        <Translate id="nav.reg.title"></Translate>
                     </ModalHeader>
                     <ModalBody>
                     <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
@@ -108,7 +143,7 @@ class RegisterModal extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button type="submit" onClick={this.handleSubmit} size="md">Register</Button>
+                        <Button type="submit" onClick={this.handleSubmit} size="md"><Translate id="nav.reg.action"></Translate></Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -120,13 +155,15 @@ RegisterModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
     error: PropTypes.object.isRequired,
-    isAuth: PropTypes.bool.isRequired
+    isAuth: PropTypes.bool.isRequired,
+    lang: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
     error: state.error,
     isAuth: state.auth.isAuthenticated,
-    page: state.user.page
+    page: state.user.page,
+    lang: getActiveLanguage(state.localize)
 })
 
 export default connect(mapStateToProps, {registerUser, clearAllErrors, addUser})(RegisterModal)

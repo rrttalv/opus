@@ -1,0 +1,14 @@
+{
+    "nav": {
+        "reg": {
+            "action": ["Register", "Registreeri"],
+            "title": ["New user registration", "Uue kasutaja registreerimine"]
+        },
+        "log": {
+            "action": ["Login", "Logi sisse"],
+            "title": ["Login", "Sisse logimine"]
+        },
+        "add": ["Add user", "Lisa kasutaja"],
+        "out": ["Logout", "Logi välja"]
+    }
+}

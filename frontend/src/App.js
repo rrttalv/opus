@@ -1,22 +1,37 @@
 import React, { Component } from "react";
 import './App.css';
+import { renderToStaticMarkup } from "react-dom/server";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { withLocalize } from "react-localize-redux";
+import globalTranslations from "./translations/global.json";
 import AppNav from "./components/AppNav";
 import Routes from "./Routes";
-
+import LanguageToggle from "./components/LanguageToggle"
 
 class App extends Component{
+
+  constructor(props){
+    super(props);
+    this.props.initialize({
+      languages: [
+        { name: "English", code: "en" },
+        { name: "Estonian", code: "ee" }
+      ],
+      translation: globalTranslations,
+      options: { renderToStaticMarkup }
+    })
+  }
 
   render(){
     return (
       
         <div>
           <AppNav/>
+          <LanguageToggle />
           <Routes/>
         </div>
     );
   }
 }
 
-export default App;
+export default withLocalize(App);

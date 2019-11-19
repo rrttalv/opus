@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history'
 import { Provider } from 'react-redux';
 import store from './store';
 import { getLoginStatus } from './actions/authActions';
+import { LocalizeProvider } from "react-localize-redux";
 
 export const history = createBrowserHistory()
 export const componentDidMount = () => {
@@ -14,7 +15,13 @@ export const componentDidMount = () => {
 }
 componentDidMount()
 
-ReactDOM.render(<Provider store={store}><Router history={history}><App /></Router></Provider>, document.getElementById('root'));
+ReactDOM.render(
+    <LocalizeProvider store={store}>
+        <Provider store={store}>
+            <Router history={history}><App /></Router>
+        </Provider>
+    </LocalizeProvider>, 
+    document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
