@@ -29,11 +29,11 @@ class AppNav extends Component {
     render() {
         const authLinks = (
             <Fragment>
+                <NavItem>
+                    <RegisterModal href="#"></RegisterModal>
+                </NavItem>
                 <NavItem href="#">
                     <Logout></Logout>
-                </NavItem>
-                <NavItem>
-                    <RegisterModal buttonText={'Add User'} modalTitle={'Add New User'}></RegisterModal>
                 </NavItem>
             </Fragment>
         )

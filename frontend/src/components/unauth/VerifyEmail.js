@@ -6,6 +6,7 @@ import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
 import { withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
+import { Translate, getActiveLanguage } from "react-localize-redux";
 
 class VerifyEmail extends Component {
     
@@ -40,18 +41,31 @@ class VerifyEmail extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    generateFormSchema = () => {
+        if(this.props.lang.code === "ee"){
+            return [{
+                name: 'emailToken',
+                label: 'Emailile saadetud kood',
+                placeholder: 'Sisesta kood',
+                type: 'text'
+            }];
+        }else{
+            return [{
+                name: 'emailToken',
+                label: 'Token sent via email',
+                placeholder: 'Enter token',
+                type: 'text'
+            }];
+        }
+    }
+
     render() {
-        const formSchema = [{
-            name: 'emailToken',
-            label: 'Token sent via email',
-            placeholder: 'Enter token',
-            type: 'text'
-        }];
+        const formSchema = this.generateFormSchema()
         const formStyle = {width: '50%', margin: '0 auto', textAlign: 'left', padding: '2rem 2rem'};
         const buttonStyle = {width: '100%'};
         return (
             <Container style={{textAlign: 'center'}}>
-                <h3>{`Verify your email address`}</h3>
+                <h3><Translate id="verify.title"></Translate></h3>
                 <Form style={formStyle}>
                 <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
                 {formSchema.map((element, key) => (
@@ -65,7 +79,7 @@ class VerifyEmail extends Component {
                         ></Input>
                     </FormGroup>
                 ))}
-                <Button style={buttonStyle} onClick={this.handleTokenSubmit} type="submit">{`Verify`}</Button>
+                <Button style={buttonStyle} onClick={this.handleTokenSubmit} type="submit"><Translate id="buttons.verify"></Translate></Button>
                 </Form>
             </Container>
         )
@@ -81,7 +95,8 @@ VerifyEmail.propTypes = {
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    error: state.error
+    error: state.error,
+    lang: getActiveLanguage(state.localize)
 })
 
 export default connect(mapStateToProps, { verifyEmailAddress, clearAllErrors })(withRouter(VerifyEmail));

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { ModalBody, ModalFooter, Row, Col, Button } from 'reactstrap';
+import { ModalBody, ModalFooter, Button } from 'reactstrap';
 import { deleteUser } from '../../actions/userActions';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-
+import { Translate } from "react-localize-redux";
 class DeleteConfirmationModal extends Component {    
 
     handleUserDelete = () => {
@@ -28,11 +28,11 @@ class DeleteConfirmationModal extends Component {
         return (
             <div>
                 <ModalBody>
-                    <h5>{`Do you want to delete ${data.firstName} ${data.lastName}?`}</h5>
+                    <h5><Translate id="modals.user_delete.title" data={{first: data.firstName, last: data.lastName}}></Translate></h5>
                 </ModalBody>
                 <ModalFooter>
-                    <Button onClick={this.handleUserDelete} size="md" color="danger">{`Delete`}</Button>
-                    <Button onClick={toggle} color="info" size="md">{`Cancel`}</Button>
+                    <Button onClick={this.handleUserDelete} size="md" color="danger"><Translate id="buttons.del"></Translate></Button>
+                    <Button onClick={toggle} color="info" size="md"><Translate id="buttons.cancel"></Translate></Button>
                 </ModalFooter>
             </div>
         )

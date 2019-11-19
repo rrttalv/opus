@@ -6,6 +6,7 @@ import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom'
+import { Translate, getActiveLanguage } from "react-localize-redux";
 
 class LoginModal extends Component {
     componentDidUpdate = errorState => {
@@ -28,7 +29,6 @@ class LoginModal extends Component {
         super(props);
         this.state = {
             modalOpen: false,
-            title: 'Login',
             email: '',
             password: '',
             error: false,
@@ -56,28 +56,49 @@ class LoginModal extends Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
+    generateFormSchema = () => {
+        if(this.props.lang.code === "ee"){
+            return [
+                {   
+                    name: "email",
+                    label: "Emaili aadress",
+                    placeholder: "Sinu meiliaadress",
+                    type: "email"
+                },
+                {   
+                    name: "password",
+                    label: "Parool",
+                    placeholder: "Valitud parool",
+                    type: "password"
+                }
+            ]
+        }else{
+            return [
+                {   
+                    name: "email",
+                    label: "Email address",
+                    placeholder: "Registered email address",
+                    type: "email"
+                },
+                {   
+                    name: "password",
+                    label: "Password",
+                    placeholder: "Selected password",
+                    type: "password"
+                }
+            ]
+        }
+    }
+
     render() {
-        const formSchema = [
-            {   
-                name: "email",
-                label: "Email address",
-                placeholder: "Registered email address",
-                required: true,
-                type: "text"
-            },
-            {   
-                name: "password",
-                label: "Password",
-                placeholder: "Selected password",
-                required: true,
-                type: "password"
-            }
-        ]
+        const formSchema = this.generateFormSchema();
         return (
             <div>
-            <NavLink onClick={this.toggle}>Login</NavLink>
+            <NavLink onClick={this.toggle}><Translate id="nav.log.action"></Translate></NavLink>
             <Modal isOpen={this.state.modalOpen} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}>{this.state.title}</ModalHeader>
+                <ModalHeader toggle={this.toggle}>
+                    <Translate id="nav.log.title"></Translate>
+                </ModalHeader>
                 <ModalBody>
                 <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
                     <Form>
@@ -94,8 +115,10 @@ class LoginModal extends Component {
                     </Form>
                 </ModalBody>
                 <ModalFooter style={{justifyContent: 'space-between'}}>
-                    <Link onClick={this.toggle} style={{color: `#454545`}} to="/forgot">Forgot Password</Link>
-                    <Button type="submit" size="md" onClick={this.handleSubmit}>Login</Button>
+                    <Link onClick={this.toggle} style={{color: `#454545`}} to="/forgot">
+                        <Translate id="nav.log.secondary_action"></Translate>
+                    </Link>
+                    <Button type="submit" size="md" onClick={this.handleSubmit}><Translate id="nav.log.action"></Translate></Button>
                 </ModalFooter>
             </Modal>
             </div>
@@ -107,12 +130,14 @@ LoginModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     loginUser: PropTypes.func.isRequired,
     isAuth: PropTypes.bool,
-    error: PropTypes.object.isRequired
+    error: PropTypes.object.isRequired,
+    lang: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     isAuth: state.auth.isAuthenticated,
-    error: state.error
+    error: state.error,
+    lang: getActiveLanguage(state.localize)
 })
 
 export default connect(mapStateToProps, {loginUser, clearAllErrors})(LoginModal)

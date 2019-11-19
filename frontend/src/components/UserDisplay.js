@@ -7,6 +7,7 @@ import { PropTypes } from 'prop-types';
 import Loading from './Loading';
 import RootModal from './RootModal';
 import UserPagination from './UserPagination';
+import { Translate } from "react-localize-redux";
 
 class UserDisplay extends Component {
 
@@ -48,10 +49,10 @@ class UserDisplay extends Component {
                         <span style={spanStyle}>{element.email}</span>
                         </Col>
                         <Col xs="3" lg="1">
-                        <Button color="info" style={buttonStyle} onClick={() => this.showUserModal(element)}>{'View'}</Button>
+                        <Button color="info" style={buttonStyle} onClick={() => this.showUserModal(element)}><Translate id="buttons.view"></Translate></Button>
                         </Col>
                         <Col xs="3" lg="1">
-                        <Button color="danger" style={buttonStyle} onClick={() => this.displayDeletePrompt(element)}>{'Delete'}</Button>
+                        <Button color="danger" style={buttonStyle} onClick={() => this.displayDeletePrompt(element)}><Translate id="buttons.del"></Translate></Button>
                         </Col>
                     </Row>
                 </ListGroupItem>))
@@ -69,7 +70,8 @@ class UserDisplay extends Component {
 UserDisplay.propTypes = {
     getUsers: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
-    users: PropTypes.object.isRequired
+    users: PropTypes.object.isRequired,
+    modal: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

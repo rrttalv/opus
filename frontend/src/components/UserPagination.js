@@ -3,6 +3,7 @@ import { getUsers } from '../actions/userActions';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Translate } from "react-localize-redux";
 
 class UserPagination extends Component {
     loadPreviousPage = () => {
@@ -28,18 +29,27 @@ class UserPagination extends Component {
                 <Pagination className="margin-top" style={paginationContainerStyle}>
                     <PaginationItem style={paginationItemStyle}>
                         <PaginationLink previous onClick={this.loadPreviousPage} href="#">
-                            <span style={paginationLinkStyle}>{`Previous`}</span>
+                            <span style={paginationLinkStyle}>
+                                <Translate id="pagination.prev"></Translate>
+                            </span>
                         </PaginationLink>
                     </PaginationItem>
                     <PaginationItem style={paginationItemStyle}>
                         <PaginationLink next onClick={this.loadNextPage} href="#">
-                            <span style={paginationLinkStyle}>{`Next`}</span>
+                            <span style={paginationLinkStyle}>
+                                <Translate id="pagination.next"></Translate>
+                            </span>
                         </PaginationLink>
                     </PaginationItem>
                 </Pagination>
             </div>
         )
     }
+}
+
+UserPagination.propTypes = {
+    getUsers: PropTypes.func.isRequired,
+    users: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

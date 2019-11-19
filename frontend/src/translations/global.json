@@ -1,4 +1,20 @@
-{
+{   
+    "home": {
+        "title": ["User management tool", "Kasutaja haldustarkvara"],
+        "sub_title": ["Login or register to continue", "Logi sisse või registreeri"]
+    },
+    "forgot": {
+        "title": ["Reset password", "Uuenda parooli"]
+    },
+    "verify": {
+        "title": ["Verify email address", "Kinnita meiliaadress"]
+    },
+    "reset": {
+        "title": ["Reset account password", "Taasta kasutaja parool"]
+    },
+    "dash": {
+        "title": ["All registered users", "Registreeritud kasutajad"]
+    },
     "nav": {
         "reg": {
             "action": ["Register", "Registreeri"],
@@ -6,9 +22,34 @@
         },
         "log": {
             "action": ["Login", "Logi sisse"],
+            "secondary_action": ["Forgot password", "Unustasin parooli"],
             "title": ["Login", "Sisse logimine"]
         },
-        "add": ["Add user", "Lisa kasutaja"],
+        "add": {
+            "action": ["Add user", "Lisa kasutaja"],
+            "title": ["Add new user", "Uue kasutaja lisamine"]
+        },
         "out": ["Logout", "Logi välja"]
+    },
+    "pagination": {
+        "prev": ["Previous", "Eelmine"],
+        "next": ["Next", "Järgmine"]
+    },
+    "modals": {
+        "user_details": {
+            "title": ["Viewing ${first} ${last}", "Vaatad ${first} ${last}"],
+            "no_log": ["This user has not logged in yet", "Kasutaja pole veel sisse loginud"]
+        },
+        "user_delete": {
+            "title": ["Do you want to delete ${first} ${last}", "Kas tahad kustutada ${first} ${last}"]
+        }
+    },
+    "buttons": {
+        "del": ["Delete", "Kustuta"],
+        "view": ["View", "Vaata"],
+        "cancel": ["Cancel", "Tühista"],
+        "reset": ["Send reset email", "Saada taastamise email"],
+        "submit_reset": ["Submit new password", "Vaheta parooli"],
+        "verify": ["Verify email", "Kinnita email"]
     }
 }

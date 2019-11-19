@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { sendResetPasswordRequest } from '../../actions/authActions';
 import { withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
+import { Translate, getActiveLanguage } from "react-localize-redux";
 
 class ForgotPassword extends Component {
     constructor(props){
@@ -22,18 +23,31 @@ class ForgotPassword extends Component {
         this.props.sendResetPasswordRequest(this.state, this.props.history)
     }
 
+    generateFormSchema = () => {
+        if(this.props.lang.code === "ee"){
+            return [{
+                name: 'email',
+                label: 'Registreeritud meiliaadress',
+                placeholder: 'Sisesta meiliaadress',
+                type: 'email'
+            }]
+        }else{
+            return [{
+                name: 'email',
+                label: 'Login email',
+                placeholder: 'Enter your login email',
+                type: 'email'
+            }]
+        }
+    }
+
     render() {
-        const formSchema = [{
-            name: 'email',
-            label: 'Login email',
-            placeholder: 'Enter your login email',
-            type: 'email'
-        }];
+        const formSchema = this.generateFormSchema();
         const formStyle = {width: '50%', margin: '0 auto', textAlign: 'left', padding: '2rem 2rem'};
         const buttonStyle = {width: '100%'};
         return (
             <Container style={{textAlign: 'center'}}>
-                <h3>{`Reset account password`}</h3>
+                <h3><Translate id="reset.title"></Translate></h3>
                 <Form style={formStyle}>
                     {formSchema.map((element, i) => (
                         <FormGroup key={i}>
@@ -48,7 +62,7 @@ class ForgotPassword extends Component {
                             ></Input>
                         </FormGroup>
                     ))}
-                <Button style={buttonStyle} onClick={this.handleEmailSubmit} type="submit">{`Send Reset Email`}</Button>
+                <Button style={buttonStyle} onClick={this.handleEmailSubmit} type="submit"><Translate id="buttons.reset"></Translate></Button>
                 </Form>
             </Container>
         )
@@ -56,11 +70,13 @@ class ForgotPassword extends Component {
 }
 
 ForgotPassword.propTypes = {
-    sendResetPasswordRequest: PropTypes.func.isRequired
+    sendResetPasswordRequest: PropTypes.func.isRequired,
+    lang: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    lang: getActiveLanguage(state.localize)
 });
 
 export default connect(mapStateToProps, {sendResetPasswordRequest})(withRouter(ForgotPassword))

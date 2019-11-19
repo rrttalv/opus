@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { ModalBody, ModalHeader, Row, Col, Table } from 'reactstrap';
 import { PropTypes } from 'prop-types';
+import { Translate } from "react-localize-redux";
+
 class UserDetailsModal extends Component {
     
     render() {
@@ -9,15 +11,15 @@ class UserDetailsModal extends Component {
         const mdStyle = {size: 8, offset: 2}
         return (
             <div>
-                <ModalHeader toggle={() => toggle()}>{`Viewing ${data.firstName} ${data.lastName}`}</ModalHeader>
+                <ModalHeader toggle={() => toggle()}><Translate id="modals.user_details.title" data={{ first: data.firstName, last: data.lastName }}></Translate></ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col className="center" md={mdStyle}>
-                            <span className="bold">{`Contact email: ${data.email}`}</span>
+                            <span className="bold">{`Email: ${data.email}`}</span>
                         </Col>
                         {data.login_count.length > 0 ?
                         <Col className="center" xs={{size: 12}} md={{size: 10, offset: 1}}>
-                            <span className="bold margin-top">Login Log</span>
+                            <span className="bold margin-top">Log</span>
                             <Table>
                                 <tbody>
                                     {data.login_count.map((date, i) => 
@@ -27,7 +29,7 @@ class UserDetailsModal extends Component {
                             </Table>
                         </Col> :
                         <Col className="center" md={mdStyle}>
-                            <span>{`This user has not logged in yet`}</span>
+                            <Translate id="modals.user_details.no_log"></Translate>
                         </Col>
                         }
                     </Row>

@@ -3,7 +3,7 @@ import { NavLink } from 'reactstrap';
 import { logout } from '../actions/authActions';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-
+import { Translate } from "react-localize-redux";
 class Logout extends Component {
 
     handleLogout = () => {
@@ -13,7 +13,7 @@ class Logout extends Component {
     render() {
         return (
             <NavLink onClick={() => this.handleLogout()}>
-                {`Logout`}
+                <Translate id="nav.out"></Translate>
             </NavLink>
         )
     }

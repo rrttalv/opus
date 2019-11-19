@@ -6,6 +6,7 @@ import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
 import { withRouter } from "react-router-dom";
 import { PropTypes } from 'prop-types';
+import { Translate, getActiveLanguage } from "react-localize-redux";
 
 class UpdatePassword extends Component {
     constructor(props){
@@ -52,19 +53,32 @@ class UpdatePassword extends Component {
         this.props.checkPasswordToken(tokenFromParams);
     }
 
+    generateFormSchema = () => {
+        if(this.props.lang.code === "ee"){
+            return [{
+                name: 'password',
+                label: 'Uus parool',
+                placeholder: 'Sisesta uus parool',
+                type: 'password'
+            }];
+        }else{
+            return [{
+                name: 'password',
+                label: 'New password',
+                placeholder: 'Enter a new password',
+                type: 'password'
+            }];
+        }
+    }
+
     render() {
-        const formSchema = [{
-            name: 'password',
-            label: 'New password',
-            placeholder: 'Enter a new password',
-            type: 'password'
-        }];
+        const formSchema = this.generateFormSchema();
         const formStyle = {width: '50%', margin: '0 auto', textAlign: 'left', padding: '2rem 2rem'};
         const buttonStyle = {width: '100%'};
         return (
             <div>
                 <Container style={{textAlign: 'center'}}>
-                        <h3>{`${'Reset password'}`}</h3>
+                        <h3><Translate id="forgot.title"></Translate></h3>
                     <Form style={formStyle}>
                     <ErrorDisplay error={this.state.error} message={this.state.errorMessage} />
                         {formSchema.map((element, i) => (
@@ -78,7 +92,7 @@ class UpdatePassword extends Component {
                                 ></Input>         
                             </FormGroup>
                         ))}
-                    <Button style={buttonStyle} onClick={this.submitNewPassword} type="submit">{`Submit Password`}</Button>
+                    <Button style={buttonStyle} onClick={this.submitNewPassword} type="submit"><Translate id="buttons.submit_reset"></Translate></Button>
                     </Form>
                 </Container>
             </div>
@@ -90,11 +104,13 @@ UpdatePassword.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     checkPasswordToken: PropTypes.func.isRequired,
     resetPassword: PropTypes.func.isRequired,
-    error: PropTypes.object
+    error: PropTypes.object,
+    lang: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    error: state.error
+    error: state.error,
+    lang: getActiveLanguage(state.localize)
 })
 
 export default connect(mapStateToProps, { checkPasswordToken, resetPassword, clearAllErrors })(withRouter(UpdatePassword))

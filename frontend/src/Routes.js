@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from "react-router-dom";
 import { LoggedInRoute } from "./LoggedInRoute"
 import { connect } from 'react-redux';
-import Home from '../src/components/Home';
+import Home from './components/unauth/Home';
 import VerifyEmail from '../src/components/unauth/VerifyEmail';
 import ForgotPassword from '../src/components/unauth/ForgotPassword';
 import UpdatePassword from '../src/components/unauth/UpdatePassword';

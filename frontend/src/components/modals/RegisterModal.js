@@ -59,7 +59,7 @@ class RegisterModal extends Component {
     }
 
     getFormSchema = () => {
-        if(this.props.lang.code == "ee"){
+        if(this.props.lang.code === "ee"){
             return [    
                 {   
                     name: "firstName",
@@ -76,8 +76,8 @@ class RegisterModal extends Component {
                 {   
                     name: "email",
                     label: "Emaili aadress",
-                    placeholder: "Sinu meiliaadress",
-                    type: "text"
+                    placeholder: "Sisselogimise meiliaadress",
+                    type: "email"
                 },
                 {   
                     name: "password",
@@ -103,8 +103,8 @@ class RegisterModal extends Component {
                 {   
                     name: "email",
                     label: "Email address",
-                    placeholder: "Your email address",
-                    type: "text"
+                    placeholder: "Login email address",
+                    type: "email"
                 },
                 {   
                     name: "password",
@@ -120,12 +120,18 @@ class RegisterModal extends Component {
         const formSchema = this.getFormSchema();
         return (
             <div>
-                <NavLink onClick={this.toggle}><Translate id="nav.reg.action"></Translate></NavLink>
+                <NavLink onClick={this.toggle}>
+                    {this.props.isAuth ? 
+                    <Translate id="nav.add.action"></Translate> :
+                    <Translate id="nav.reg.action"></Translate>}
+                </NavLink>
                 <Modal 
                 isOpen={this.state.modalOpen}
                 toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>
-                        <Translate id="nav.reg.title"></Translate>
+                    {this.props.isAuth ? 
+                    <Translate id="nav.add.title"></Translate> : 
+                    <Translate id="nav.reg.title"></Translate>}
                     </ModalHeader>
                     <ModalBody>
                     <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
@@ -143,7 +149,11 @@ class RegisterModal extends Component {
                         </Form>
                     </ModalBody>
                     <ModalFooter>
-                        <Button type="submit" onClick={this.handleSubmit} size="md"><Translate id="nav.reg.action"></Translate></Button>
+                        <Button type="submit" onClick={this.handleSubmit} size="md">
+                            {this.props.isAuth ? 
+                            <Translate id="nav.add.action"></Translate> : 
+                            <Translate id="nav.reg.action"></Translate>}
+                        </Button>
                     </ModalFooter>
                 </Modal>
             </div>
