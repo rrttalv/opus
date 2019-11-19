@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     login_count: {
-        type: [{type: Date}]
+        type: [{ type: Date }]
     },
     signup: {
         type: Date,
@@ -33,20 +33,20 @@ export default mongoose.model('User', userSchema);
 
 export const comparePassword = async (inputPassword, hash) => {
     return await bcrypt.compareSync(inputPassword, hash);
-}
+};
 
 export const hashUserPassword = async (user) => {
-    let salt = await bcrypt.genSaltSync(10);
-    let hashedPassword = await bcrypt.hashSync(user.password, salt);
+    const salt = await bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hashSync(user.password, salt);
     user.password = hashedPassword;
     return user;
-}
+};
 
 export const hashPassword = async (textPassword) => {
-    let salt = await bcrypt.genSaltSync(10);
+    const salt = await bcrypt.genSaltSync(10);
     return await bcrypt.hashSync(textPassword, salt);
-}
+};
 
 export const saveNewUser = async (user) => {
     return await user.save();
-}
+};
