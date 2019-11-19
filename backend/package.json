@@ -33,9 +33,10 @@
     "typescript": "^3.7.2"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node -r esm server.js",
     "server": "nodemon -r esm server.js",
-    "client": "npm start --prefix client"
+    "client": "npm start --prefix ../frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "rico rein talvar",
   "license": "ISC"
