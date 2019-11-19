@@ -1,18 +1,14 @@
-import React, { Component } from 'react'
-import { withLocalize } from "react-localize-redux";
+import React, { Component } from 'react';
+import { withLocalize } from 'react-localize-redux';
 import { Button } from 'reactstrap';
-class LanguageToggle extends Component {
-    constructor(props){
-        super(props);
-        
-    }
 
+class LanguageToggle extends Component {
     changeLang = (lang) => {
         this.props.setActiveLanguage(lang);
     }
 
-    render() {
-        const buttonStyle = {marginRight: "10px"};
+    render () {
+        const buttonStyle = { marginRight: '10px' };
         return (
             <div>
                 <Button style={buttonStyle} onClick={() => this.changeLang('ee')}>
@@ -22,7 +18,7 @@ class LanguageToggle extends Component {
                     EN
                 </Button>
             </div>
-        )
+        );
     }
 }
 

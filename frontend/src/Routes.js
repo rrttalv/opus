@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { LoggedInRoute } from "./LoggedInRoute"
 import { connect } from 'react-redux';
 import Home from './components/unauth/Home';

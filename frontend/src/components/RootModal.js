@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
-import UserDetailsModal from './modals/UserDetailsModal';
-import DeleteConfirmationModal from './modals/DeleteConfirmationModal'
+import React, { Component } from 'react';
 import { Modal } from 'reactstrap';
 import { connect } from 'react-redux';
+import UserDetailsModal from './modals/UserDetailsModal';
+import DeleteConfirmationModal from './modals/DeleteConfirmationModal';
 import { hideModal } from '../actions/modalActions';
 
 class RootModal extends Component {
-    
-    constructor(props){
+    constructor (props) {
         super(props);
         this.state = {
             modalOpen: props.modal.open
-        }
+        };
     }
 
     closeModal = () => {
@@ -19,36 +18,35 @@ class RootModal extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if(nextProps.modal.open !== this.props.modal.open){
-            this.setState({modalOpen: nextProps.modal.open});
+        if (nextProps.modal.open !== this.props.modal.open) {
+            this.setState({ modalOpen: nextProps.modal.open });
         }
     }
 
     modals = {
-        'USER_MODAL': UserDetailsModal,
-        'DELETE_MODAL': DeleteConfirmationModal
+        USER_MODAL: UserDetailsModal,
+        DELETE_MODAL: DeleteConfirmationModal
     }
 
-    render() {
-        if(this.props.modal.modalType){
+    render () {
+        if (this.props.modal.modalType) {
             const SelectedModal = this.modals[this.props.modal.modalType];
             return (
                 <Modal isOpen={this.props.modal.open} toggle={this.closeModal}>
                     <SelectedModal toggle={this.closeModal} data={this.props.modal.modalProps}></SelectedModal>
                 </Modal>
-            )
-        }else{
-            return (
-                <div></div>
-            )
+            );
         }
 
+        return (
+            <div></div>
+        );
     }
 }
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     modal: state.modal
-})
+});
 
-export default connect(mapStateToProps, { hideModal })(RootModal)
+export default connect(mapStateToProps, { hideModal })(RootModal);

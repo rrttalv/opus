@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class SuccessDisplay extends Component {
-    render() {
+    render () {
         return (
             <div>
-                
+
             </div>
-        )
+        );
     }
 }

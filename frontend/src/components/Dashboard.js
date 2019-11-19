@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Container } from 'reactstrap';
+import { Translate } from 'react-localize-redux';
 import UserDisplay from './UserDisplay';
-import { Translate } from "react-localize-redux";
 
 export default class Dashboard extends Component {
-    render() {
+    render () {
         return (
             <div>
                 <Container>
@@ -12,6 +12,6 @@ export default class Dashboard extends Component {
                     <UserDisplay></UserDisplay>
                 </Container>
             </div>
-        )
+        );
     }
 }

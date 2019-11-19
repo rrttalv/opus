@@ -1,15 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { checkPasswordToken, resetPassword } from '../../actions/authActions';
-import { Button, Container, FormGroup, Form, Label, Input } from 'reactstrap';
-import ErrorDisplay from '../ErrorDisplay';
-import { clearAllErrors } from '../../actions/errorActions';
-import { withRouter } from "react-router-dom";
+import {
+    Button, Container, FormGroup, Form, Label, Input
+} from 'reactstrap';
+import { withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { Translate, getActiveLanguage } from "react-localize-redux";
+import { Translate, getActiveLanguage } from 'react-localize-redux';
+import { clearAllErrors } from '../../actions/errorActions';
+import ErrorDisplay from '../ErrorDisplay';
+import { checkPasswordToken, resetPassword } from '../../actions/authActions';
 
 class UpdatePassword extends Component {
-    constructor(props){
+    constructor (props) {
         super(props);
         this.state = {
             resetToken: '',
@@ -17,70 +19,72 @@ class UpdatePassword extends Component {
             errorMessage: '',
             password: '',
             passwordToken: ''
-        }
+        };
     }
 
-    componentDidUpdate = currentState => {
-        if(currentState.error !== this.props.error){
-            if(this.props.error.id === 'VERIFY_TOKEN_ERROR'){
+    componentDidUpdate = (currentState) => {
+        if (currentState.error !== this.props.error) {
+            if (this.props.error.id === 'VERIFY_TOKEN_ERROR') {
                 this.props.history.push('/');
                 this.props.clearAllErrors();
             }
-            if(this.props.error.id === 'RESET_ERROR'){
-                this.setState({error: true, errorMessage: this.props.error.message});
-            }else{
-                this.setState({error: false, errorMessage: ''})
+            if (this.props.error.id === 'RESET_ERROR') {
+                this.setState({ error: true, errorMessage: this.props.error.message });
+            }
+            else {
+                this.setState({ error: false, errorMessage: '' });
             }
         }
     }
 
-    handleChange = e => {
+    handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    submitNewPassword = e => {
+    submitNewPassword = (e) => {
         e.preventDefault();
-        let requestBody = {
-            passwordToken: this.state.passwordToken, 
+        const requestBody = {
+            passwordToken: this.state.passwordToken,
             password: this.state.password
-        }
-        this.props.resetPassword(requestBody, this.props.history)
+        };
+        this.props.resetPassword(requestBody, this.props.history);
     }
 
     componentDidMount = () => {
-        let tokenFromParams = this.props.location.search.split("=")[1];
-        this.setState({passwordToken: tokenFromParams});
+        const tokenFromParams = this.props.location.search.split('=')[1];
+        this.setState({ passwordToken: tokenFromParams });
         this.props.checkPasswordToken(tokenFromParams);
     }
 
     generateFormSchema = () => {
-        if(this.props.lang.code === "ee"){
+        if (this.props.lang.code === 'ee') {
             return [{
                 name: 'password',
                 label: 'Uus parool',
                 placeholder: 'Sisesta uus parool',
                 type: 'password'
             }];
-        }else{
-            return [{
-                name: 'password',
-                label: 'New password',
-                placeholder: 'Enter a new password',
-                type: 'password'
-            }];
         }
+        return [{
+            name: 'password',
+            label: 'New password',
+            placeholder: 'Enter a new password',
+            type: 'password'
+        }];
     }
 
-    render() {
+    render () {
         const formSchema = this.generateFormSchema();
-        const formStyle = {width: '50%', margin: '0 auto', textAlign: 'left', padding: '2rem 2rem'};
-        const buttonStyle = {width: '100%'};
+        const formStyle = {
+            width: '50%', margin: '0 auto', textAlign: 'left', padding: '2rem 2rem'
+        };
+        const buttonStyle = { width: '100%' };
         return (
             <div>
-                <Container style={{textAlign: 'center'}}>
-                        <h3><Translate id="forgot.title"></Translate></h3>
+                <Container style={{ textAlign: 'center' }}>
+                    <h3><Translate id="forgot.title"></Translate></h3>
                     <Form style={formStyle}>
-                    <ErrorDisplay error={this.state.error} message={this.state.errorMessage} />
+                        <ErrorDisplay error={this.state.error} message={this.state.errorMessage} />
                         {formSchema.map((element, i) => (
                             <FormGroup key={i}>
                                 <Label>{element.label}</Label>
@@ -89,14 +93,14 @@ class UpdatePassword extends Component {
                                     type={element.type}
                                     placeholder={element.placeholder}
                                     onChange={this.handleChange}
-                                ></Input>         
+                                ></Input>
                             </FormGroup>
                         ))}
-                    <Button style={buttonStyle} onClick={this.submitNewPassword} type="submit"><Translate id="buttons.submit_reset"></Translate></Button>
+                        <Button style={buttonStyle} onClick={this.submitNewPassword} type="submit"><Translate id="buttons.submit_reset"></Translate></Button>
                     </Form>
                 </Container>
             </div>
-        )
+        );
     }
 }
 
@@ -106,11 +110,11 @@ UpdatePassword.propTypes = {
     resetPassword: PropTypes.func.isRequired,
     error: PropTypes.object,
     lang: PropTypes.object.isRequired
-}
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     error: state.error,
     lang: getActiveLanguage(state.localize)
-})
+});
 
-export default connect(mapStateToProps, { checkPasswordToken, resetPassword, clearAllErrors })(withRouter(UpdatePassword))
+export default connect(mapStateToProps, { checkPasswordToken, resetPassword, clearAllErrors })(withRouter(UpdatePassword));
