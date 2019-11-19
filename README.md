@@ -14,6 +14,6 @@ In the backend folder of the project directory run the following command:
 
 ## Features
 
-Can register, sends a email to verify email address. Can reset your password. A registered user can add new users, view user login logs or delete already registered users. After deleting a user an email gets sent out to the user who was deleted.
+Can register, sends an email to verify email address. Can reset your password. A registered user can add new users, view user's login logs or delete already registered users. After deleting a user an email gets sent out to the user who was deleted.
 
 The application can be used in either English or Estonian.
