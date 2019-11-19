@@ -6,7 +6,7 @@ import { withLocalize } from "react-localize-redux";
 import globalTranslations from "./translations/global.json";
 import AppNav from "./components/AppNav";
 import Routes from "./Routes";
-import LanguageToggle from "./components/LanguageToggle"
+import AppFooter from "./components/AppFooter"
 
 class App extends Component{
 
@@ -27,8 +27,8 @@ class App extends Component{
       
         <div>
           <AppNav/>
-          <LanguageToggle />
           <Routes/>
+          <AppFooter />
         </div>
     );
   }

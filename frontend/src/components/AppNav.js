@@ -23,7 +23,7 @@ class AppNav extends Component {
     }
 
     userAuthenticated(){
-        return this.props.auth;
+        return this.props.isAuth;
     }
 
     render() {
@@ -64,11 +64,11 @@ class AppNav extends Component {
 }
 
 AppNav.propTypes = {
-    auth: PropTypes.bool.isRequired
+    isAuth: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth.isAuthenticated
+    isAuth: state.auth.isAuthenticated
 })
 
 export default connect(mapStateToProps, null)(AppNav);

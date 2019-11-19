@@ -165,7 +165,7 @@ RegisterModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
     error: PropTypes.object.isRequired,
-    isAuth: PropTypes.bool.isRequired,
+    isAuth: PropTypes.bool,
     lang: PropTypes.object.isRequired
 }
 
