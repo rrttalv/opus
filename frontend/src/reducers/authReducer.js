@@ -42,14 +42,18 @@ export default (state = initState, action) => {
                 isAuthenticated: true,
                 isLoading: false
             }
-        case LOGIN_FAIL:
+        case REGISTER_SUCCESS:
         case REGISTER_FAIL:
-        case AUTH_ERROR:
         case STOP_LOADING:
+            return{
+                ...state,
+                isLoading: false
+            }
+        case LOGIN_FAIL:
+        case AUTH_ERROR:
         case RESET_ERROR:
         case VERIFY_ERROR:
         case RESET_PASSWORD:
-        case REGISTER_SUCCESS:
         case RESET_PASSWORD:
         case UPDATE_PASSWORD:
         case VERIFY_EMAIL:

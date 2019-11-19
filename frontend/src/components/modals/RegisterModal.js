@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
 import ErrorDisplay from '../ErrorDisplay';
 import { clearAllErrors } from '../../actions/errorActions';
+import { addUser } from '../../actions/userActions';
 import { PropTypes } from 'prop-types';
 class RegisterModal extends Component {
     constructor(props){
         super(props);
         this.state = {
             modalOpen: false,
-            title: 'Register',
             email: '',
             password: '',
             firstName: '',
@@ -45,7 +45,11 @@ class RegisterModal extends Component {
             lastName: this.state.lastName,
             password: this.state.password
         }
-        this.props.registerUser(newUser, this.toggle);
+        if(this.props.isAuth){
+            this.props.addUser(newUser, this.toggle, this.props.page);
+        }else{
+            this.props.registerUser(newUser, this.toggle);
+        }
     }
 
     handleChange = e => {
@@ -57,19 +61,19 @@ class RegisterModal extends Component {
             {   
                 name: "firstName",
                 label: "First name",
-                placeholder: "Your first name",
+                placeholder: "John",
                 type: "text"
             },
             {   
                 name: "lastName",
                 label: "Last name",
-                placeholder: "Your last name",
+                placeholder: "Smith",
                 type: "text"
             },
             {   
                 name: "email",
                 label: "Email address",
-                placeholder: "Your email address",
+                placeholder: "Email address",
                 type: "text"
             },
             {   
@@ -81,12 +85,12 @@ class RegisterModal extends Component {
         ]
         return (
             <div>
-                <NavLink onClick={this.toggle}>Register</NavLink>
+                <NavLink onClick={this.toggle}>{this.props.buttonText}</NavLink>
                 <Modal 
                 isOpen={this.state.modalOpen}
                 toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>
-                        {this.state.title}
+                        {this.props.modalTitle}
                     </ModalHeader>
                     <ModalBody>
                     <ErrorDisplay error={this.state.error} message={this.state.errorMessage}></ErrorDisplay>
@@ -115,11 +119,14 @@ class RegisterModal extends Component {
 RegisterModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
-    error: PropTypes.object.isRequired
+    error: PropTypes.object.isRequired,
+    isAuth: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    error: state.error
+    error: state.error,
+    isAuth: state.auth.isAuthenticated,
+    page: state.user.page
 })
 
-export default connect(mapStateToProps, {registerUser, clearAllErrors})(RegisterModal)
+export default connect(mapStateToProps, {registerUser, clearAllErrors, addUser})(RegisterModal)

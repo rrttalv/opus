@@ -32,12 +32,15 @@ class AppNav extends Component {
                 <NavItem href="#">
                     <Logout></Logout>
                 </NavItem>
+                <NavItem>
+                    <RegisterModal buttonText={'Add User'} modalTitle={'Add New User'}></RegisterModal>
+                </NavItem>
             </Fragment>
         )
         const unauthLinks = (
             <Fragment>
                 <NavItem href="#" style={{marginRight: '0.5rem'}}>
-                    <RegisterModal></RegisterModal>
+                    <RegisterModal buttonText={'Register'} modalTitle={'New user registration'}></RegisterModal>
                 </NavItem>
                 <NavItem href="#">
                     <LoginModal></LoginModal>
