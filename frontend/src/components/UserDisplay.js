@@ -42,18 +42,19 @@ class UserDisplay extends Component {
             fontWeight: '600', verticalAlign: 'sub', width: '75%', marginBottom: '0'
         };
         const buttonStyle = { flex: '1', maxWidth: 'fit-content', marginRight: '5px' };
+        const colStyle = { display: 'flex', justifyContent: 'center' };
         return (
             <Container className="margin-top padding-bottom">
                 <ListGroup>{
                     !loading ? users.map((element, i) => (<ListGroupItem className="margin-top" key={i}>
                         <Row>
-                            <Col xs="6" lg="10">
+                            <Col xs="6" lg="8">
                                 <span style={spanStyle}>{element.email}</span>
                             </Col>
-                            <Col xs="3" lg="1">
+                            <Col xs="3" lg="2" style={colStyle}>
                                 <Button color="info" style={buttonStyle} onClick={() => this.showUserModal(element)}><Translate id="buttons.view"></Translate></Button>
                             </Col>
-                            <Col xs="3" lg="1">
+                            <Col xs="3" lg="2" style={colStyle}>
                                 <Button color="danger" style={buttonStyle} onClick={() => this.displayDeletePrompt(element)}><Translate id="buttons.del"></Translate></Button>
                             </Col>
                         </Row>
