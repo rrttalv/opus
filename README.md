@@ -4,7 +4,7 @@ This project saves users to a mongodb instance. It consists of React on the fron
 
 ## Installation
 
-You have to run npm install in both the backend and frontend directory of the project.
+You have to run `npm install` in both the backend and frontend directory of the project.
 
 ## How to start the project
 
