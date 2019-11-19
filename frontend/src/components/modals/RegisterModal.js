@@ -169,9 +169,9 @@ class RegisterModal extends Component {
 RegisterModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
-    error: PropTypes.object.isRequired,
+    error: PropTypes.object,
     isAuth: PropTypes.bool,
-    lang: PropTypes.object.isRequired
+    lang: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

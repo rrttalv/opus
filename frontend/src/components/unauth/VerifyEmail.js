@@ -92,8 +92,9 @@ class VerifyEmail extends Component {
 VerifyEmail.propTypes = {
     verifyEmailAddress: PropTypes.func.isRequired,
     clearAllErrors: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    error: PropTypes.object
+    auth: PropTypes.object,
+    error: PropTypes.object,
+    lang: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

@@ -134,8 +134,8 @@ LoginModal.propTypes = {
     clearAllErrors: PropTypes.func.isRequired,
     loginUser: PropTypes.func.isRequired,
     isAuth: PropTypes.bool,
-    error: PropTypes.object.isRequired,
-    lang: PropTypes.object.isRequired
+    error: PropTypes.object,
+    lang: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

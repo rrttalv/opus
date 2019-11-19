@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     ModalBody, ModalHeader, Row, Col, Table
 } from 'reactstrap';
-import { PropTypes } from 'prop-types';
 import { Translate } from 'react-localize-redux';
 
 class UserDetailsModal extends Component {
@@ -37,10 +36,5 @@ class UserDetailsModal extends Component {
         );
     }
 }
-
-UserDetailsModal.propTypes = {
-    toggle: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired
-};
 
 export default UserDetailsModal;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'reactstrap';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import UserDetailsModal from './modals/UserDetailsModal';
 import DeleteConfirmationModal from './modals/DeleteConfirmationModal';
 import { hideModal } from '../actions/modalActions';
@@ -44,6 +45,10 @@ class RootModal extends Component {
     }
 }
 
+RootModal.propTypes = {
+    modal: PropTypes.object.isRequired,
+    hideModal: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     modal: state.modal
